@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Abstandsskala — Doms Stufen aus Figma.
+   5·10·15·20 fein, dann verdoppelnd: 50·100·200.
+
+   `--spacing: initial` schaltet Tailwinds stufenlose Standardskala ab.
+   Damit gibt es keine Zwischenwerte mehr: `mt-8` erzeugt schlicht keine
+   Regel, `mt-20` schon. Der Klassenname ist der Pixelwert.
+   ------------------------------------------------------------------ */
+@theme {
+  --spacing: initial;
+  --spacing-0: 0px;      /* keine Stufe, sondern Abwesenheit — für top-0/inset-0 */
+  --spacing-5:   5px;   /* tiny        */
+  --spacing-10: 10px;   /* super small */
+  --spacing-15: 15px;   /* extra small */
+  --spacing-20: 20px;   /* small — zugleich Rand und Gutter */
+  --spacing-50: 50px;   /* medium      */
+  --spacing-100: 100px; /* big         */
+  --spacing-200: 200px; /* large       */
+}
+
+/* ------------------------------------------------------------------
+   Tokens aus Figma — Datei Aisu.Studio, Seite DH.Com
+   Namen entsprechen den Variablen dort, damit der Abgleich leicht bleibt.
+   ------------------------------------------------------------------ */
+:root {
+  --dh-dark: #131008;     /* DH/Dark   */
+  --dh-bright: #dedede;   /* DH/Bright */
+  --dh-link: #4a6ff5;     /* DH/LINK   */
+
+  --dh-what: #ffd767;     /* DH/What  → Work   */
+  --dh-can: #5af5bf;      /* DH/Can   → Skills */
+  --dh-i: #a892ff;        /* DH/I     → About  */
+
+  --dh-round-md: 10px;    /* DH/MD-Round */
+  --dh-round-sm: 4px;     /* DH/SM-Round */
+  --dh-thin: 1px;         /* DH/Thin     */
+
+  /* Zustände — DH/Soft Dim = 70, die 20%-Fassungen der drei Richtungsfarben */
+  --dh-soft-dim: 0.7;
+  --dh-what-20: #ffd76733;
+  --dh-can-20: #5af5bf33;
+  --dh-i-20: #a892ff33;
+  --dh-bright-20: #dedede33;
+
+  /* Titelgrößen als Variablen — die Eyebrow und der Jahres-Vorsprung hängen daran */
+  --hero-title: clamp(46px, 8.75vw, 112px);
+  --list-title: clamp(38px, 5vw, 64px);
+  --title-2: clamp(38px, 5vw, 64px);      /* DH/H2 — eigener Regler, auch wenn er heute gleich steht */
+
+  /* 12er-Raster aus Figma: 1280 max, 20 Rand, 20 Gutter → Spalte 85.
+     Rand und Gutter sind die Stufe „small" — Raster und Abstände sprechen dieselbe Sprache. */
+  --page-max: 1280px;
+  --margin: var(--spacing-20);
+  --gutter: var(--spacing-20);
+
+  /* Kartendrehung — Werte von berd.xyz/neverbealone übernommen */
+  --flip-dur: 650ms;
+  --flip-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html, body { background: var(--dh-dark); color: var(--dh-bright); }
+body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+.mono  { font-family: var(--font-geist-mono), ui-monospace, monospace; }
+.pixel { font-family: var(--font-geist-pixel), var(--font-geist-mono), monospace; }
+
+/* ---- Textstile ---- */
+.t-title  { font-size: var(--hero-title); line-height: 0.964; font-weight: 200; }            /* DH/Title  ExtraLight 112/108 */
+.t-h2     { font-size: var(--title-2); line-height: 1.297; font-weight: 400; }                            /* DH/H2     Regular 64        */
+.t-h3     { font-size: clamp(22px, 2.5vw, 32px); line-height: 1.4; font-weight: 400; }                 /* DH/H3     Regular 32/44.8   */
+.t-body   { font-size: 20px; line-height: 1.5; font-weight: 400; }                                     /* Abschnittstext 20/30        */
+.t-p2     { font-size: 20px; line-height: 1.35; font-weight: 400; }                                    /* DH/P2     Regular 20        */
+.t-p2s    { font-size: 20px; line-height: 1.2; font-weight: 600; }                                     /* DH/P2 Strong SemiBold 20    */
+.t-code   { font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 18px; line-height: 1.35; } /* DH/Code 1 */
+.t-listtitle { font-size: var(--list-title); line-height: 1.297; font-weight: 400; }      /* Listeneintrag 64/AUTO */
+.t-eyebrow{ font-size: 12px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; line-height: 1.297; } /* DH/Eyebrow */
+
+/* ---- Raster ---- */
+.page  { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--margin); }
+.grid12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); }
+.col-content { grid-column: 2 / -1; }
+
+/* Unter 700 px klappt das 12er-Raster zusammen: jedes direkte Kind über die volle
+   Breite. Steht ungeschichtet und schlägt damit Tailwinds col-span/col-start. */
+@media (max-width: 700px) {
+  .col-content { grid-column: 1 / -1; }
+  .grid12 > * { grid-column: 1 / -1; }
+}
+
+/* ---- Spaltenrollen ---------------------------------------------------
+   Statt Rasterklassen an den Elementen: benannte Rollen, die je Gerät
+   anders liegen. Drei Stufen — Desktop ab 1025, Tablet 701–1024, Telefon
+   bis 700. Auf dem Tablet ist die 8/4-Teilung zu eng: die Leiste wandert
+   unter den Inhalt, und die Textspalte darf bis an den rechten Rand.
+   --------------------------------------------------------------------- */
+.col-main   { grid-column: 1 / 9; }
+.col-rail   { grid-column: 9 / -1; }
+.col-label  { grid-column: 1 / 3; }
+.col-body   { grid-column: 3 / 9; max-width: 640px; }   /* Zeilenlänge deckeln, sonst
+                                                             läuft der Text auf dem iPad
+                                                             quer auf über 80 Zeichen */
+.col-half-a { grid-column: 1 / 5; }
+.col-half-b { grid-column: 5 / 9; }
+
+@media (max-width: 1024px) {
+  .col-main, .col-rail { grid-column: 1 / -1; }
+  .col-body   { grid-column: 3 / -1; }
+  .col-half-a { grid-column: 1 / 7; }
+  .col-half-b { grid-column: 7 / -1; }
+}
+
+@media (max-width: 700px) {
+  .col-label, .col-body, .col-half-a, .col-half-b,
+  .col-main, .col-rail { grid-column: 1 / -1; }
+}
+
+/* ---- Berührung: alles Anfassbare wird DH/LINK ----------------------
+   Aus den Bauteilen DH/Standart Text Button, Frame 13 und Group 8:
+   Ruhezustand DH/Bright, beim Berühren Schrift und Rand in DH/LINK.
+   Gilt auch für die externen Links im Footer — Doms Entscheidung, das Bauteil
+   DH/New Tab Link zeigt dort noch die ältere Abdunklung auf 0,7.
+   Die frühere Unschärfe ist damit abgelöst. --------------------------- */
+.link-hover { transition: color .3s ease-out; }
+.link-hover:is(:hover, :focus-visible) { color: var(--dh-link); }
+
+.btn-outline {
+  border: var(--dh-thin) solid var(--dh-bright);
+  color: var(--dh-bright);
+  border-radius: 90px;
+  transition: color .3s ease-out, border-color .3s ease-out;
+}
+.btn-outline:is(:hover, :focus-visible) { border-color: var(--dh-link); color: var(--dh-link); }
+
+/* Eyebrow über dem Wort: 15 px (extra small) zwischen ihrer Grundlinie und der
+   Versalienoberkante des Wortes. Die Versalie liegt bei 0,1248 · Titelgröße unter
+   der Zeilenoberkante, die Grundlinie der Eyebrow 10,5 px unter ihrer eigenen —
+   macht 0,1248 · Größe − 25,5 px. Damit hält der Abstand, wenn der Titel schrumpft. */
+.hero-eyebrow { top: calc(var(--hero-title) * 0.1248 - 25.5px); }
+
+/* Die drei Türwörter tragen in Ruhe DH/Title Underlined — Dicke 1,5 %, Abstand 10 %,
+   beides prozentual zur Schriftgröße, wie in Figma. Beim Berühren wechselt das Bauteil
+   auf DH/Title ohne Strich; hier blendet die Linie über die Farbe aus, damit sie nicht
+   springt und die Zeile ihre Höhe behält. */
+.hero-word {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.5%;
+  text-underline-offset: 10%;
+  text-decoration-color: currentColor;
+  transition: background-color .3s ease-out, color .3s ease-out, text-decoration-color .3s ease-out;
+}
+.hero-word[data-active="true"] { text-decoration-color: transparent; }
+
+/* ---- Info Notes im Hero ---------------------------------------------
+   Sitzen mittig unter ihrem Wort, oben bündig an der Unterkante des Highlights.
+   Deckkraft und Verschiebung stehen hier statt im Inline-Stil, damit die schmale
+   Fassung sie überschreiben kann. Nur die Farbe kommt je Tür aus dem Bauteil.
+
+   Unter 700 px wäre die 352 px breite Notiz teils außerhalb des Bildschirms —
+   dort wird sie zu einem Kasten am unteren Rand. Das ist meine Entscheidung,
+   im Entwurf gibt es diesen Fall noch nicht.
+   --------------------------------------------------------------------- */
+.hero-note {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+  transition: opacity .3s ease-out, transform .3s ease-out;
+}
+.hero-note[data-open="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 700px) {
+  .hero-note {
+    position: fixed;
+    inset: auto var(--margin) var(--margin);
+    width: auto;
+    max-width: none;
+    transform: translateY(10px);
+  }
+  .hero-note[data-open="true"] { transform: translateY(0); }
+}
+
+/* Marke am linken Rand — dieselbe Regel wie in der Fallseite: die Versalie der
+   12-px-Marke sitzt auf der Versalie der ersten Zeile ihres Fließtextes.
+   4,54 px: die 12-px-Marke setzt höher an als der 20/30-Fließtext. */
+.section-label { padding-top: 4.54px; }
+
+/* Umschalterzeile der Projektseite — Bauteil Group 8: Text DH/H3, Linie darunter,
+   beim Berühren beides DH/LINK. Aktiv/inaktiv steuert die Deckkraft im Bauteil. */
+.rail-row {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  padding-bottom: 10px; margin-bottom: 10px;
+  border-bottom: var(--dh-thin) solid currentColor;
+  transition: color .3s ease-out, opacity .3s ease-out;
+}
+.rail-row:is(:hover, :focus-visible) { color: var(--dh-link); opacity: 1; }
+/* Auf Touchgeräten schrumpft DH/H3 — Fingerziel trotzdem über 44 px halten */
+@media (max-width: 1024px) { .rail-row { padding-block: 8px 12px; } }
+
+/* ---- Projektliste ----------------------------------------------------
+   Ruhezustand DH/Soft Dim (0,7). Beim Berühren wird der Eintrag voll hell
+   und die drei Marken nehmen ihre Richtungsfarbe an — dieselben drei Farben
+   wie die Türen im Hero. Alle Übergänge 0,3 s.
+   --------------------------------------------------------------------- */
+.project-item { opacity: var(--dh-soft-dim); transition: opacity .3s ease-out; }
+.project-item:is(:hover, :focus-visible) { opacity: 1; }
+.project-item .tag { transition: color .3s ease-out; }
+.project-item:is(:hover, :focus-visible) .tag-building   { color: var(--dh-what); }
+.project-item:is(:hover, :focus-visible) .tag-management { color: var(--dh-can); }
+.project-item:is(:hover, :focus-visible) .tag-design     { color: var(--dh-i); }
+
+/* Zwei Spalten über beide Zeilen: links Titel und Reifegrad, rechts Mini-Beschreibung
+   und die Richtungsmarken. Dadurch fluchten Zeile 1 und Zeile 2 miteinander, egal wie
+   lang der Titel ist. Keine Zeilenlücke — die Zeilenschachtel des Titels ist der Abstand. */
+.item-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 15px; }
+@media (max-width: 700px) { .item-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Jahr rechtsbündig in 53 px, Versalie auf Höhe der Titelversalie */
+.list-year { width: 53px; text-align: right; }
+
+/* Mini-Beschreibung unten bündig: Grundlinie ihrer letzten Zeile auf der Grundlinie
+   des Titels. Von der Zeilenunterkante bis zur Grundlinie sind es 0,297 · Größe —
+   für den Titel also 0,297·Größe, für die 20-px-Beschreibung 6,43 px (gemessen).
+   Zeilenabstand steht hier, weil .t-p2 außerhalb von @layer liegt. */
+.mini-desc { line-height: 1.297; align-self: end; padding-bottom: calc(var(--list-title) * 0.297 - 6.43px); }
+@media (max-width: 700px) { .mini-desc { padding-bottom: 0; align-self: start; } }
+
+.rule { height: var(--dh-thin); background: currentColor; opacity: .35; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
