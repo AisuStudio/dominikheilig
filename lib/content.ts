@@ -40,9 +40,12 @@ export type Project = {
   sections: Section[];
   visit?: string;
   readMore?: string;
+  /** Zurückgestellt: taucht weder in der Liste noch als Seite auf. Der Eintrag
+      bleibt erhalten, damit er ohne Neuschreiben wieder sichtbar werden kann. */
+  hidden?: boolean;
 };
 
-export const PROJECTS: Project[] = [
+const ALLE_PROJEKTE: Project[] = [
   {
     slug: "fontane",
     title: "Fontane.Studio",
@@ -437,10 +440,10 @@ export const PROJECTS: Project[] = [
     maturity: "Delivered",
     directions: ["management", "design"],
     lead:
-      "Compass.co was a marketing analytics app for Shopify, acquired by Sage in 2017 and closed in 2020. A mostly remote company headquartered in San Francisco, with the team spread across England, Germany, Hong Kong, Pakistan and Australia.",
+      "Compass.co was a marketing analytics app for the Shopify ecosystem, acquired by Sage in 2017 and closed in 2020. A mostly remote company with its headquarters in San Francisco and the team spread across three major time zones — England, Germany, Hong Kong, Pakistan and Australia.",
     views: ["Dashboards", "Design system", "Insights Report", "Mobile sign-up", "Marketing"],
     shots: ["/work/compass-co/01.jpg", "/work/compass-co/02.jpg", "/work/compass-co/03.jpg", "/work/compass-co/04.jpg", "/work/compass-co/05.jpg"],
-    tech: "Sketch · Unbounce",
+    tech: "Sketch (Bohemian Coding) · Unbounce · Storybook",
     sections: [
       {
         label: "Responsibilities",
@@ -459,6 +462,41 @@ export const PROJECTS: Project[] = [
         label: "Mobile sign-up",
         body: [
           "Analytics showed a large drop in conversion at the data-connection step during mobile sign-up: users were forced to connect their shop before they could see anything at all.",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "aisulab",
+    title: "AisuLab",
+    year: "2026",
+    mini: "Coding exercises for a ten-year-old",
+    maturity: "Early Stage",
+    directions: ["building", "design"],
+    lead:
+      "Exercises that teach a ten-year-old to program, read data and think about privacy — starting from the game he already plays. Built together with my son, who is also the first tester.",
+    views: ["Exercises", "Toolbox", "Media"],
+    shots: ["/work/aisulab/01.jpg", "/work/aisulab/02.jpg", "/work/aisulab/03.jpg"],
+    tech: "Astro · self-hosted fonts, no Google Fonts · no JavaScript framework, CSS-only mobile navigation",
+    sections: [
+      {
+        label: "How it is built up",
+        body: [
+          "Exercises run in two tracks, coder and hacker, and each carries its difficulty, minimum age, duration and the tools it needs. The early ones read the Brawl Stars API with Python: fetch the JSON, loop over it, find the brawler with the most trophies.",
+          "Later ones turn to data traces and security literacy — what an app knows about you, written into a file you can open and read yourself.",
+        ],
+      },
+      {
+        label: "The toolbox",
+        body: [
+          "Twelve tools, each with its level, platforms, price and a short note on when it is worth reaching for.",
+        ],
+      },
+      {
+        label: "Decisions",
+        body: [
+          "No external JavaScript framework and no fonts loaded from someone else's server. The mobile navigation is a checkbox and a label in CSS rather than a script, so it works with JavaScript switched off.",
         ],
       },
     ],
@@ -541,6 +579,7 @@ export const PROJECTS: Project[] = [
 
   {
     slug: "treatwell",
+    hidden: true,
     title: "Treatwell",
     year: "2018",
     mini: "An experience board for both sides",
@@ -594,6 +633,7 @@ export const PROJECTS: Project[] = [
 
   {
     slug: "spirit-sprint",
+    hidden: true,
     title: "Spirit Sprint",
     year: "2026",
     mini: "A workshop deck turned into a web flow",
@@ -695,41 +735,11 @@ export const PROJECTS: Project[] = [
     visit: "https://chillbert.vercel.app",
   },
 
-  {
-    slug: "aisulab",
-    title: "AisuLab",
-    year: "2026",
-    mini: "Coding exercises for a ten-year-old",
-    maturity: "Early Stage",
-    directions: ["building", "design"],
-    lead:
-      "Exercises that teach a ten-year-old to program, read data and think about privacy — starting from the game he already plays. Built together with my son, who is also the first tester.",
-    views: ["Exercises", "Toolbox", "Media"],
-    shots: ["/work/aisulab/01.jpg", "/work/aisulab/02.jpg", "/work/aisulab/03.jpg"],
-    tech: "Astro · self-hosted fonts, no Google Fonts · no JavaScript framework, CSS-only mobile navigation",
-    sections: [
-      {
-        label: "How it is built up",
-        body: [
-          "Exercises run in two tracks, coder and hacker, and each carries its difficulty, minimum age, duration and the tools it needs. The early ones read the Brawl Stars API with Python: fetch the JSON, loop over it, find the brawler with the most trophies.",
-          "Later ones turn to data traces and security literacy — what an app knows about you, written into a file you can open and read yourself.",
-        ],
-      },
-      {
-        label: "The toolbox",
-        body: [
-          "Twelve tools, each with its level, platforms, price and a short note on when it is worth reaching for.",
-        ],
-      },
-      {
-        label: "Decisions",
-        body: [
-          "No external JavaScript framework and no fonts loaded from someone else's server. The mobile navigation is a checkbox and a label in CSS rather than a script, so it works with JavaScript switched off.",
-        ],
-      },
-    ],
-  },
 ];
+
+/** Was die Seite zeigt. Zurückgestellte Projekte fallen hier heraus — damit
+    verschwinden sie zugleich aus der Liste, der Klappe und den gebauten Seiten. */
+export const PROJECTS: Project[] = ALLE_PROJEKTE.filter((p) => !p.hidden);
 
 // Die drei Türen im Hero.
 export const DOORS = [
