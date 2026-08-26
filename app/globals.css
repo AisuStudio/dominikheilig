@@ -48,6 +48,7 @@
   --hero-title: clamp(46px, 8.75vw, 112px);
   --list-title: clamp(38px, 5vw, 64px);
   --title-2: clamp(38px, 5vw, 64px);      /* DH/H2 — eigener Regler, auch wenn er heute gleich steht */
+  --title-3: clamp(22px, 2.5vw, 32px);    /* DH/H3 — die Klappe rechnet ihren Abstand daraus */
 
   /* 12er-Raster aus Figma: 1280 max, 20 Rand, 20 Gutter → Spalte 85.
      Rand und Gutter sind die Stufe „small" — Raster und Abstände sprechen dieselbe Sprache. */
@@ -69,13 +70,23 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 /* ---- Textstile ---- */
 .t-title  { font-size: var(--hero-title); line-height: 0.964; font-weight: 200; }            /* DH/Title  ExtraLight 112/108 */
 .t-h2     { font-size: var(--title-2); line-height: 1.297; font-weight: 400; }                            /* DH/H2     Regular 64        */
-.t-h3     { font-size: clamp(22px, 2.5vw, 32px); line-height: 1.4; font-weight: 400; }                 /* DH/H3     Regular 32/44.8   */
+.t-h3     { font-size: var(--title-3); line-height: 1.4; font-weight: 400; }                           /* DH/H3     Regular 32/44.8   */
 .t-body   { font-size: 20px; line-height: 1.5; font-weight: 400; }                                     /* Abschnittstext 20/30        */
 .t-p2     { font-size: 20px; line-height: 1.35; font-weight: 400; }                                    /* DH/P2     Regular 20        */
 .t-p2s    { font-size: 20px; line-height: 1.2; font-weight: 600; }                                     /* DH/P2 Strong SemiBold 20    */
 .t-code   { font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 18px; line-height: 1.35; } /* DH/Code 1 */
 .t-listtitle { font-size: var(--list-title); line-height: 1.297; font-weight: 400; }      /* Listeneintrag 64/AUTO */
 .t-eyebrow{ font-size: 12px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; line-height: 1.297; } /* DH/Eyebrow */
+
+/* „Built with" als Aufzählung: das · war ohnehin das Trennzeichen, jetzt ist es die
+   Marke. Raster statt Einzug, damit umbrechende Einträge unter dem ersten Wort
+   hängen und nicht unter dem Punkt. 15 px Spalte = Punktbreite (10,8 px in der
+   18-px-Mono) plus Luft. 5 px zwischen den Einträgen, damit ein zweizeiliger
+   Eintrag als einer lesbar bleibt. */
+.code-list > li { display: grid; grid-template-columns: 15px minmax(0, 1fr); }
+.code-list > li + li { margin-top: 5px; }
+.code-list > li::before { content: "\00B7"; }
+
 
 /* ---- Raster ---- */
 .page  { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--margin); }
@@ -133,11 +144,14 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 }
 .btn-outline:is(:hover, :focus-visible) { border-color: var(--dh-link); color: var(--dh-link); }
 
-/* Eyebrow über dem Wort: 15 px (extra small) zwischen ihrer Grundlinie und der
-   Versalienoberkante des Wortes. Die Versalie liegt bei 0,1248 · Titelgröße unter
-   der Zeilenoberkante, die Grundlinie der Eyebrow 10,5 px unter ihrer eigenen —
-   macht 0,1248 · Größe − 25,5 px. Damit hält der Abstand, wenn der Titel schrumpft. */
-.hero-eyebrow { top: calc(var(--hero-title) * 0.1248 - 25.5px); }
+/* Eyebrow über dem Wort: 10 px (super small) zwischen ihrer Grundlinie und der
+   Oberkante des Highlights. Gemessen wird gegen den Kasten, nicht gegen die Versalie —
+   der Kasten reicht rund 14 px über die Versalie hinaus, gegen sie gemessen standen
+   Eyebrow und Highlight nur 1 px auseinander und berührten sich optisch.
+   Die Kastenoberkante liegt auf der Oberkante des Wortumfelds, deshalb genügt ein
+   fester Wert: 10 px Luft + 10,5 px von der Kastenoberkante der Eyebrow zu ihrer
+   Grundlinie. Hält bei jeder Titelgröße, weil der Kasten mitwächst. */
+.hero-eyebrow { top: -20.5px; }
 
 /* Die drei Türwörter tragen in Ruhe DH/Title Underlined — Dicke 1,5 %, Abstand 10 %,
    beides prozentual zur Schriftgröße, wie in Figma. Beim Berühren wechselt das Bauteil
@@ -229,3 +243,58 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ---------------------------------------------------------------------
+   Projektklappe in der Kopfzeile — nach „Component 6" (100:150) in Figma.
+   Die Zeile ist dort 320,79 × 58,01 mit DH/H3 32/44,8; der Text sitzt bei
+   3,99 % von links (12,8 px) und 11,22 % von oben (6,5 px), die 1-px-Linie
+   liegt oben, nicht unten, und trägt DH/Bright.
+
+   Die Fläche der Zeile ist im Entwurf DH/Dark bei 10 % — über der gleich
+   dunklen Seite bleibt davon nichts übrig, deshalb trägt die Klappe selbst
+   DH/Dark deckend. Ohne das läge die Liste durchsichtig über dem Screenshot
+   darunter und wäre nicht lesbar.
+   --------------------------------------------------------------------- */
+.crumb-menu {
+  position: absolute;
+  /* Oberkante bündig mit der Unterkante der 72-px-Kopfzeile:
+     (72 − Zeilenhöhe der Marke) / 2 unter dem Knopf. */
+  top: calc(100% + (72px - 1.4 * var(--title-3)) / 2);
+  left: -12.8px;                       /* Text der Zeilen fluchtet mit dem „/" */
+  z-index: 40;
+  width: 320.79px;
+  max-width: calc(100vw - 2 * var(--margin));
+  max-height: calc(100dvh - 72px - var(--spacing-50));
+  overflow-y: auto;
+  background: var(--dh-dark);
+  overscroll-behavior: contain;
+}
+.crumb-row {
+  display: block;
+  /* 58,01 px hoch: 1 px Linie + 5,7 oben + 44,8 Zeile + 6,5 unten.
+     Im Entwurf liegt die Linie innerhalb der Zeile, hier trägt sie der Rand —
+     deshalb oben 0,8 px weniger Polster. */
+  padding: 5.7px 12.8px 6.5px;
+  border-top: var(--dh-thin) solid var(--dh-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.crumb-row:is(:hover, :focus-visible) { color: var(--dh-link); border-top-color: var(--dh-link); }
+
+/* Der Winkel dreht sich beim Öffnen — 0,3 s wie alle Übergänge auf der Seite. */
+/* Unter 700 px läuft die Krume so weit nach rechts, dass die 320-px-Klappe
+   aus dem Bild fiele. Dort hängt sie deshalb an den Seitenrändern, wie die
+   Info Note im Hero. */
+@media (max-width: 700px) {
+  .crumb-menu {
+    position: fixed;
+    inset: 72px var(--margin) auto;
+    width: auto;
+    max-width: none;
+    max-height: calc(100dvh - 72px - var(--spacing-50));
+  }
+}
+
+.crumb-chevron { transition: transform .3s ease-out; }
+[aria-expanded="true"] > .crumb-chevron { transform: rotate(180deg); }

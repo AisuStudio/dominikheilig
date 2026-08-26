@@ -52,7 +52,14 @@ export const PROJECTS: Project[] = [
     directions: ["building", "design"],
     lead:
       "A browser-based handwriting font editor with a marketplace attached. You draw the glyphs, it builds a real font file — OTF, UFO, variable — and publishes it without anyone having to make an account. Landing page, app and its own cookie-free analytics.",
-    views: ["Glyph Box Editor", "Grid View", "Writer", "Marketplace", "Analytics"],
+    views: ["Grid", "Typer", "Writer", "Marketplace", "Font specimen"],
+    shots: [
+      "/work/fontane/grid.jpg",
+      "/work/fontane/typer.jpg",
+      "/work/fontane/writer.jpg",
+      "/work/fontane/marketplace.jpg",
+      "/work/fontane/specimen.jpg",
+    ],
     tech: "opentype.js · perfect-freehand · Supabase · UFO export + Glyphs plugin · own variable-font build",
     sections: [
       {
@@ -90,33 +97,59 @@ export const PROJECTS: Project[] = [
     slug: "cnsl",
     title: "CNSL",
     year: "2026",
-    mini: "One set of tasks, six views on it",
+    mini: "Seven tools over one set of projects",
     maturity: "Mature Prototype",
     directions: ["building", "management"],
     lead:
-      "Short for console — like a gaming console, a small tool that does a lot. A self-hostable task tracker that gives you several views over one set of tasks, with fast inline editing, a one-click time tracker and a capture-first log for thoughts and reminders.",
-    views: ["Today", "Backlog", "Board", "Project", "Log", "Archive"],
+      "Short for console — like a gaming console, a small tool that does a lot. Seven tools share one set of projects: a task tracker with one-click time tracking, a calendar, a node editor, a routine scheduler, a note pad, a chat and a capture-first log. Notes can be published under their own URL.",
+    views: [
+      "Tracker",
+      "Note Pad",
+      "Calendar",
+      "Noder",
+      "Scheduler",
+      "Chat",
+      "Blurp Logger",
+      "Published note",
+    ],
+    shots: [
+      "/work/cnsl/demo-tracker.jpg",
+      "/work/cnsl/demo-notepad.jpg",
+      "/work/cnsl/demo-calendar.jpg",
+      "/work/cnsl/demo-noder.jpg",
+      "/work/cnsl/demo-scheduler.jpg",
+      "/work/cnsl/demo-chat.jpg",
+      "/work/cnsl/demo-blurp.jpg",
+      "/work/cnsl/note.jpg",
+    ],
     tech: "Next.js · Supabase · Prisma · TipTap · dnd-kit · fractional-indexing · Web Push",
     sections: [
       {
         label: "How it works",
         body: [
-          "One task list, six ways to look at it. Today filters to what is due, Backlog holds what is unscheduled, Board is a kanban, Project groups by project, Log is a capture-first stream for notes and reminders, Archive keeps what is done.",
+          "The tools sit side by side over the same projects. The tracker holds the tasks and runs a timer on any of them; the calendar puts them on dates; the scheduler turns a repeated sequence into timed steps; the noder draws a task as a graph of steps and branches; the note pad, the chat and the log carry the text around the work.",
           "A task is edited where it stands — there is no detail dialog to open. The time tracker is one click on the task itself.",
+        ],
+      },
+      {
+        label: "Publishing",
+        body: [
+          "A note can be given its own URL under an author handle — /note/handle/slug — and made public or access-controlled. The published page is plain and readable, and the data stays in the same place as the rest.",
+          "Projects can be shared by email with editor or viewer roles, or opened for public submission so contributors add items without an account.",
         ],
       },
       {
         label: "Hardest call",
         body: [
-          "Ship the first phase entirely in the browser. Everything lives in local storage, nothing leaves the device, and there is no account.",
-          "That cost sharing and a second device. It bought a product that could be reshaped weekly with nothing to migrate and nothing to breach while the model was still moving. The backend follows once the model stops moving.",
+          "Ship the first phase entirely in the browser: everything in local storage, nothing leaving the device, no account.",
+          "That cost sharing and a second device. It bought a product that could be reshaped weekly with nothing to migrate and nothing to breach while the model was still moving. The backend came later, once the model had settled.",
         ],
       },
       {
         label: "Process",
         body: [
           "The board seeds itself from CNSL's own roadmap on first load. The app tracks its own development, which means every missing feature is visible in the tool while you use it.",
-          "The public demo lets visitors add and edit tasks in their own browser but not delete — the roadmap is seeded from code, so it stays intact.",
+          "The landing page runs the real components rather than pictures of them: the tour cycles through all seven tools with sample data.",
         ],
       },
     ],
@@ -177,6 +210,7 @@ export const PROJECTS: Project[] = [
     lead:
       "The site for a graphic novel about rebuilding a research tower at Scotty Creek — Canada's first Indigenous-led research station, burnt down in 2022 — and for the research tool that grew out of it.",
     views: ["Graphic Novel", "AS Dehcho", "Adoption Scenarios"],
+    shots: ["/work/fire-on-the-land/01.jpg", "/work/fire-on-the-land/02.jpg", "/work/fire-on-the-land/03.jpg"],
     tech: "Static HTML, CSS and JavaScript, no build step · Sentinel-2 L2A via the Copernicus Data Space · History API routing",
     sections: [
       {
@@ -221,6 +255,7 @@ export const PROJECTS: Project[] = [
     lead:
       "A widget for the consultancy Meile + Stein that makes the lean saving potential of a construction project visible. It embeds into their site with one script tag and a custom element.",
     views: ["Simple mode", "Pro mode", "Method & sources"],
+    shots: ["/work/lean-calculator/01.jpg", "/work/lean-calculator/02.jpg", "/work/lean-calculator/03.jpg"],
     tech: "Custom element, no runtime dependencies · fully client-side, no network call, no tracking · CSS custom properties for theming",
     sections: [
       {
@@ -258,6 +293,7 @@ export const PROJECTS: Project[] = [
     lead:
       "A browser simulation of a robot building a self-supporting timber plate shell directly on site. Instead of factory prefabrication, raw plates are delivered, milled on the spot and assembled plate by plate: the construction site becomes the factory.",
     views: ["Vehicle Shelter", "Tourism Office", "Library", "Robot & stations", "Procurement"],
+    shots: ["/work/fullerhome/01.jpg", "/work/fullerhome/02.jpg", "/work/fullerhome/03.jpg", "/work/fullerhome/04.jpg", "/work/fullerhome/05.jpg"],
     tech: "Next.js (static export) · three.js · React Three Fiber · Zustand",
     sections: [
       {
@@ -336,7 +372,8 @@ export const PROJECTS: Project[] = [
     directions: ["design", "building"],
     lead:
       "A holding room for behaviour rules — the step between a specification and a built component. It fills the gap between Figma and implementation, where the behaviour of a component is decided and currently written down nowhere.",
-    views: ["Rules", "Prototype", "Control panel", "Workflow"],
+    views: ["Component", "Rules", "Code", "Workflow"],
+    shots: ["/work/waitingroom/01.jpg", "/work/waitingroom/02.jpg", "/work/waitingroom/03.jpg", "/work/waitingroom/04.jpg"],
     tech: "Static HTML, CSS and JavaScript, no build step",
     sections: [
       {
@@ -372,7 +409,8 @@ export const PROJECTS: Project[] = [
     directions: ["management"],
     lead:
       "A product-management awareness tool: a fixed base of fourteen steps from spark to snapshot, LLM facilitation, and a hindsight audit that shows which methods you already practice — and what they are called.",
-    views: ["Mirror", "Audit", "Business Model Canvas", "Mini P&L", "Roadmap"],
+    views: ["Audit", "Mirror", "Business Model Canvas", "Glossary"],
+    shots: ["/work/witty/01.jpg", "/work/witty/02.jpg", "/work/witty/03.jpg", "/work/witty/04.jpg"],
     tech: "Static HTML, CSS and JavaScript, no build step · Markdown as the source of truth",
     sections: [
       {
@@ -462,7 +500,8 @@ export const PROJECTS: Project[] = [
     directions: ["management"],
     lead:
       "A strategic ideation workshop framework — Soul, Skills, Strategy, Spirit — turned from a facilitator deck into a self-service flow a team can run without anyone in the room to moderate it.",
-    views: ["Soul", "Skills", "Strategy", "Spirit"],
+    views: ["Overview", "Positioning", "Values Board", "Business Model Canvas"],
+    shots: ["/work/spirit-sprint/01.jpg", "/work/spirit-sprint/02.jpg", "/work/spirit-sprint/03.jpg", "/work/spirit-sprint/04.jpg"],
     tech: "Static HTML, CSS and JavaScript · Supabase · design tokens shared with the other Aisu.Studio builds",
     sections: [
       {
@@ -490,7 +529,8 @@ export const PROJECTS: Project[] = [
     directions: ["design"],
     lead:
       "The shared design tokens for Aisu.Studio projects — colour including dark mode, spacing, radius, shadow, motion and self-hosted fonts. The base every new build starts from.",
-    views: ["Tokens", "Components", "Patterns", "Fonts"],
+    views: ["Tokens", "Components", "Patterns", "Type roles"],
+    shots: ["/work/waffle/01.jpg", "/work/waffle/02.jpg", "/work/waffle/03.jpg", "/work/waffle/04.jpg"],
     tech: "CSS custom properties · no framework · self-hosted fonts (Public Sans, iA Writer Mono, Stoke)",
     sections: [
       {
@@ -526,7 +566,8 @@ export const PROJECTS: Project[] = [
     directions: ["building"],
     lead:
       "One-dimensional data in a three-dimensional cube. Drop in a picture and its colours take their places, so the cube becomes the image's gamut. Type text instead and every byte gets a place. Either way it comes out as a WebGL point cloud with the reading path lit between the points.",
-    views: ["Character mode", "Hilbert mode", "RGB cube", "Blend"],
+    views: ["Semantic text", "Pure entropy", "Character mapping", "Encrypted vault"],
+    shots: ["/work/chillbert/01.jpg", "/work/chillbert/02.jpg", "/work/chillbert/03.jpg", "/work/chillbert/04.jpg"],
     tech: "three.js · WebGL · placement blended in the vertex shader",
     sections: [
       {
@@ -562,7 +603,8 @@ export const PROJECTS: Project[] = [
     directions: ["building", "design"],
     lead:
       "Exercises that teach a ten-year-old to program, read data and think about privacy — starting from the game he already plays. Built together with my son, who is also the first tester.",
-    views: ["Exercises", "Puzzles", "Toolbox"],
+    views: ["Exercises", "Toolbox", "Media"],
+    shots: ["/work/aisulab/01.jpg", "/work/aisulab/02.jpg", "/work/aisulab/03.jpg"],
     tech: "Astro · self-hosted fonts, no Google Fonts · no JavaScript framework, CSS-only mobile navigation",
     sections: [
       {

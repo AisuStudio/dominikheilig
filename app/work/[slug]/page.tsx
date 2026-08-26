@@ -30,7 +30,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <SiteHeader crumb={project.title} />
+      <SiteHeader crumb={project.title} crumbSlug={project.slug} />
       <div className="page grid12 min-h-dvh content-start">
         <ProjectViews views={project.views} shots={project.shots} visit={project.visit} titel={project.title} />
 
@@ -41,7 +41,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
         <div className="col-rail mt-100">
           <h2 className="t-h3">Built with</h2>
-          <p className="mt-15 t-code">{project.tech}</p>
+          <ul className="code-list mt-15 t-code">
+            {project.tech.split(" · ").map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
         </div>
 
         {/* Beschriftete Abschnitte */}
