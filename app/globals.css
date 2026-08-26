@@ -198,6 +198,20 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
    4,54 px: die 12-px-Marke setzt höher an als der 20/30-Fließtext. */
 .section-label { padding-top: 4.54px; }
 
+/* Abstand zwischen den großen Blöcken der Projektseite: 100 px, wie in Figma
+   („Body", gap 100). Die Rasterzeile trägt den Zwischenraum schon, deshalb steht
+   hier nur der Rest — sonst kämen 120 heraus. */
+.block-start { margin-top: calc(100px - var(--gutter)); }
+
+/* Zeile unter dem Projekttitel: Reifegrad links, die Richtungen des Projekts
+   rechts daneben. 100 px trennen die beiden Gruppen, 20 px die Richtungen
+   untereinander; beim Umbrechen rücken die Zeilen auf 10 px zusammen. */
+.meta-row {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  column-gap: var(--spacing-100); row-gap: var(--spacing-10);
+}
+.meta-row > ul { display: flex; flex-wrap: wrap; column-gap: var(--spacing-20); row-gap: var(--spacing-10); }
+
 /* Umschalterzeile der Projektseite — Bauteil Group 8: Text DH/H3, Linie darunter,
    beim Berühren beides DH/LINK. Aktiv/inaktiv steuert die Deckkraft im Bauteil. */
 .rail-row {
