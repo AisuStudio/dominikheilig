@@ -275,7 +275,7 @@ export const PROJECTS: Project[] = [
     maturity: "Delivered",
     directions: ["building", "design"],
     lead:
-      "A widget for the consultancy Meile + Stein that makes the lean saving potential of a construction project visible. It embeds into their site with one script tag and a custom element.",
+      "A widget for the construction consultancy Meile + Stein that makes the lean saving potential of a construction project visible. It embeds into their site with one script tag and a custom element.",
     views: ["Simple mode", "Pro mode", "Method & sources"],
     shots: ["/work/lean-calculator/01.jpg", "/work/lean-calculator/02.jpg", "/work/lean-calculator/03.jpg"],
     tech: "Custom element, no runtime dependencies · fully client-side, no network call, no tracking · CSS custom properties for theming",
@@ -297,7 +297,7 @@ export const PROJECTS: Project[] = [
       {
         label: "Process",
         body: [
-          "The model came from an Excel prototype. Every deviation from that original is written down in a correction log, so the client can see what changed and why.",
+          "The model came from an Excel prototype made by the client. Every deviation from that original is written down in a correction log, so the client can see what changed and why.",
           "The model has unit tests that run without a build step, and the widget makes no network call at all.",
         ],
       },
