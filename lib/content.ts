@@ -32,8 +32,10 @@ export type Project = {
   year: string;          // TODO Dom: Jahreszahlen prüfen, alles auf 2026 gesetzt
   mini: string;          // zwei Zeilen neben dem Titel, ca. 44 Zeichen
   maturity: Maturity;
-  /** In welcher Welt das Projekt spielt — die einzige Angabe, die Mini,
-      Richtungen und Reifegrad nicht abdecken. Darf fehlen. */
+  /** In welcher Welt das Projekt spielt. Steht zurzeit NIRGENDS auf der Seite —
+      in der Liste machte die Zeile den Eintrag zu voll, und auf der Projektseite
+      ist sie vorerst wieder raus. Die Werte bleiben als Material stehen, falls
+      die Angabe in die Mini-Beschreibungen wandert. */
   industry?: string;
   directions: Direction[];
   lead: string;          // Vorspann der Projektseite
