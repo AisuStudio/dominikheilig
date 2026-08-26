@@ -229,6 +229,13 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
    --------------------------------------------------------------------- */
 .project-item { opacity: var(--dh-soft-dim); transition: opacity .3s ease-out; }
 .project-item:is(:hover, :focus-visible) { opacity: 1; }
+
+/* Reifegrad und Richtungen liegen im Ruhezustand noch eine Stufe tiefer — im
+   Baustein sitzt die Gruppe auf 50 % innerhalb der 70 % des Eintrags, macht 35 %.
+   Beim Berühren steigen sie mit auf voll, und erst dort bekommen die Richtungen
+   ihre Farbe. Dadurch trägt die Liste in Ruhe nur Jahr, Titel und Beschreibung. */
+.project-item .item-meta { opacity: .5; transition: opacity .3s ease-out; }
+.project-item:is(:hover, :focus-visible) .item-meta { opacity: 1; }
 .project-item .tag { transition: color .3s ease-out; }
 .project-item:is(:hover, :focus-visible) .tag-building   { color: var(--dh-what); }
 .project-item:is(:hover, :focus-visible) .tag-management { color: var(--dh-can); }

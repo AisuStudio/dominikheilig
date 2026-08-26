@@ -38,7 +38,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div className="col-main mt-100">
           <h1 className="t-h2">{project.title}</h1>
           <div className="meta-row mt-10 t-eyebrow">
-            <span>{project.maturity}</span>
+            <span>
+              {project.maturity}
+              {project.industry ? ` · ${project.industry}` : ""}
+            </span>
             {/* In der Reihenfolge von DIRECTIONS, damit die Farbfolge auf allen
                 Seiten dieselbe ist — nicht in der Reihenfolge der Projektdaten. */}
             <ul>

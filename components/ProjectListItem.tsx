@@ -8,8 +8,9 @@ import { DIRECTIONS, type Project } from "@/lib/content";
  * fluchtet: links Titel und Reifegrad, rechts Mini-Beschreibung und Richtungsmarken.
  * Marken sind DH/Eyebrow — 12 px Medium, versal, 10 % gesperrt.
  *
- * Ruhezustand DH/Soft Dim, beim Berühren volle Helligkeit und die Richtungen nehmen
- * ihre Farbe an; der Reifegrad bleibt hell. Beides in `globals.css`.
+ * Ruhezustand DH/Soft Dim; Reifegrad und Richtungen liegen darin noch einmal auf 50 %,
+ * wie im Baustein. Beim Berühren steigt alles auf voll und die Richtungen nehmen ihre
+ * Farbe an. Beides in `globals.css`.
  */
 export default function ProjectListItem({ project }: { project: Project }) {
   const inner = (
@@ -20,8 +21,11 @@ export default function ProjectListItem({ project }: { project: Project }) {
         <h3 className="t-listtitle whitespace-nowrap">{project.title}</h3>
         <p className="mini-desc t-p2 max-w-[245px]">{project.mini}</p>
 
-        <p className="t-eyebrow">{project.maturity}</p>
-        <div className="flex flex-wrap gap-20 t-eyebrow">
+        {/* Nur der Reifegrad. Die Branche stand hier auch schon und machte die Zeile
+            breiter als den Titel — dann rückten Mini und Marken nach rechts weg. Sie
+            steht jetzt allein auf der Projektseite. */}
+        <p className="item-meta t-eyebrow">{project.maturity}</p>
+        <div className="item-meta flex flex-wrap gap-20 t-eyebrow">
           {DIRECTIONS.filter((d) => project.directions.includes(d.slug)).map((d) => (
             <span key={d.slug} className={`tag tag-${d.slug}`}>{d.short}</span>
           ))}

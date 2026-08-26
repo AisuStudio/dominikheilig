@@ -32,6 +32,9 @@ export type Project = {
   year: string;          // TODO Dom: Jahreszahlen prüfen, alles auf 2026 gesetzt
   mini: string;          // zwei Zeilen neben dem Titel, ca. 44 Zeichen
   maturity: Maturity;
+  /** In welcher Welt das Projekt spielt — die einzige Angabe, die Mini,
+      Richtungen und Reifegrad nicht abdecken. Darf fehlen. */
+  industry?: string;
   directions: Direction[];
   lead: string;          // Vorspann der Projektseite
   views: string[];       // Umschalter über dem Screenshot
@@ -52,6 +55,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Handwriting font editor, free to use",
     maturity: "Mature Prototype",
+    industry: "Type design",
     directions: ["building", "design"],
     lead:
       "A free browser-based handwriting-only font editor with an open marketplace. Just draw your glyphs, ligatures, contextual alternates, or any other necessary symbols.\n\n" +
@@ -114,6 +118,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Seven tools over one set of projects",
     maturity: "Mature Prototype",
+    industry: "Productivity",
     directions: ["building", "management"],
     lead:
       "CNSL, short for Console, was a pocket console idea I had back in 2006 — when Windows Mobile on my HTC was too cumbersome to feed the device with ideas and thoughts.\n\n" +
@@ -179,6 +184,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2023",
     mini: "Booking flow, claims and the partner app",
     maturity: "Delivered",
+    industry: "Moving & logistics",
     directions: ["management", "design"],
     lead:
       "Movinga was a house-move booking platform operating in Germany, France, Sweden, Austria and Switzerland. An average move cost around €1,100.\n\n" +
@@ -231,6 +237,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Project site: comic, font and a burn-recovery tool",
     maturity: "Delivered",
+    industry: "Climate & forestry",
     directions: ["building", "design"],
     lead:
       "The site for a scientific graphic novel about rebuilding a research tower at Scotty Creek Research Station, Canada’s first Indigenous-led research station, burnt down in a huge wildfire in late 2022.",
@@ -276,6 +283,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Lean savings on a construction budget",
     maturity: "Delivered",
+    industry: "Construction",
     directions: ["building", "design"],
     lead:
       "A widget for the construction consultancy Meile + Stein that makes the lean saving potential of a construction project visible. It embeds into their site with one script tag and a custom element.",
@@ -314,6 +322,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Public award procedure, documented as you go",
     maturity: "Working Prototype",
+    industry: "Construction",
     directions: ["management", "building"],
     lead:
       "A rule set for German public procurement below the EU thresholds, for Berlin and Brandenburg. Six steps pick the award procedure and write the file note while the decisions are being made. The subject comes out of an exchange with the consultancy Meile + Stein that has been running since 2025 — the same thread as the Lean Calculator and the procurement ladder in FullerHome. Work in progress: a running piece of research, not an official service and not legal advice.",
@@ -393,6 +402,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "A robot builds a timber shell on site",
     maturity: "Early Stage",
+    industry: "Construction",
     directions: ["building", "design"],
     lead:
       "A browser simulation of a robot building a self-supporting timber plate shell directly on site. Instead of factory prefabrication, raw plates are delivered, milled on the spot and assembled plate by plate: the construction site becomes the factory.",
@@ -438,6 +448,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2020",
     mini: "Marketing analytics for Shopify shops",
     maturity: "Delivered",
+    industry: "E-commerce / SaaS",
     directions: ["management", "design"],
     lead:
       "Compass.co was a marketing analytics app for the Shopify ecosystem, acquired by Sage in 2017 and closed in 2020. A mostly remote company with its headquarters in San Francisco and the team spread across three major time zones — England, Germany, Hong Kong, Pakistan and Australia.",
@@ -473,6 +484,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Coding exercises for a ten-year-old",
     maturity: "Early Stage",
+    industry: "Education",
     directions: ["building", "design"],
     lead:
       "Exercises that teach a ten-year-old to program, read data and think about privacy — starting from the game he already plays. Built together with my son, who is also the first tester.",
@@ -508,6 +520,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Where component behaviour is written down",
     maturity: "Working Prototype",
+    industry: "Design systems",
     directions: ["design", "building"],
     lead:
       "A holding room for behaviour rules — the step between a specification and a built component. It fills the gap between Figma and implementation, where the behaviour of a component is decided and currently written down nowhere.",
@@ -545,6 +558,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Names the PM methods you already practice",
     maturity: "Working Prototype",
+    industry: "Product management",
     directions: ["management"],
     lead:
       "A product-management awareness tool: a fixed base of fourteen steps from spark to snapshot, LLM facilitation, and a hindsight audit that shows which methods you already practice — and what they are called.",
@@ -584,6 +598,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2018",
     mini: "An experience board for both sides",
     maturity: "Delivered",
+    industry: "Beauty marketplace",
     directions: ["management", "design"],
     lead:
       "After Treatwell's redesign I started an experience board to understand the potential touchpoints of the clients as well as the salon owners.",
@@ -607,6 +622,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2017",
     mini: "One family's ski trip, mapped end to end",
     maturity: "Delivered",
+    industry: "Sporting goods",
     directions: ["management", "design"],
     lead:
       "An illustrated experience board for HEAD Sports — internally „Alpine Experience“: the most complete possible flow of a typical family from Cologne going on a ski trip to the Alps.",
@@ -667,6 +683,7 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "The design tokens every build starts from",
     maturity: "Delivered",
+    industry: "Design systems",
     directions: ["design"],
     lead:
       "The shared design tokens for Aisu.Studio projects — colour including dark mode, spacing, radius, shadow, motion and self-hosted fonts. The base every new build starts from.",
