@@ -178,37 +178,45 @@ export const PROJECTS: Project[] = [
     maturity: "Delivered",
     directions: ["management", "design"],
     lead:
-      "Movinga was a house-move booking platform operating in five markets — Germany, France, Sweden, Austria and Switzerland — where a regular move cost around €1,100. Four pieces of work over the same product, from the booking flow to the brand.",
+      "Movinga was a house-move booking platform operating in Germany, France, Sweden, Austria and Switzerland. An average move cost around €1,100.\n\n" +
+      "Four pieces of work over the same product, from the booking flow to the brand.",
     views: ["Booking flow", "Claim process", "Partner app", "Rebrand concept"],
-    shots: ["/work/movinga/01.jpg", "/work/movinga/02.jpg", "/work/movinga/03.jpg", "/work/movinga/04.jpg"],
-    tech: "User journey maps · funnel and lead journey analysis · flowcharts, wireframes, prototypes",
+    shots: [
+      "/work/movinga/01.jpg",
+      "/work/movinga/02.jpg",
+      "/work/movinga/03.jpg",
+      "/work/movinga/rebrand.gif",
+    ],
+    tech: "User journey maps · funnel and lead journey analysis · flowcharts, wireframes, prototypes · Adobe XD, Figma, GA",
     sections: [
       {
         label: "Booking flow",
         body: [
-          "A solid part of the leads came through the website, and more and more of them arrived on a phone. Region, seasonality, sales agent and customer liquidity all played into the flow, so touching it crossed every department in the company.",
-          "A user journey map, a funnel analysis and a lead journey analysis built the shared picture first. The measures that followed were unglamorous — more and larger call buttons, consultation offered at every touchpoint, simpler screens. About €150k more turnover year on year.",
+          "A significant part of the leads came through the website, and more and more of them arrived on a phone. Region, seasonality, sales agent and customer liquidity all played into the flow, so touching it crossed every department in the company.",
+          "A user journey map, a funnel analysis and a lead journey analysis built the shared picture first. The measures that followed were unglamorous, such as more and larger call buttons, consultation offered at every touchpoint, simpler screens.",
+          "The result was an increase of about 7% in conversion rate — roughly €150k more turnover year on year.",
         ],
       },
       {
         label: "Claim process",
         body: [
-          "The technical goal was one number: fewer emails between the customer, Movinga and the insurer. Research with the claim managers of three markets and the head of engineering, then flowcharts, paper wireframes and prototypes built with the claims department.",
-          "The process was cleaned and automated as far as it could be, so customer-side mistakes and insurer-side delays both dropped — and the different insurance requirements per market still fit inside one process.",
+          "The technical goal was one number: reduce email traffic between the customer, Movinga and the insurer.",
+          "Research with the claim managers of three markets and the head of engineering, then flowcharts, Figma wireframes and prototypes built with the claims department and the insurance company.",
+          "That cut the emails down to 10%, and on top of that the claim managers felt a huge relief in their workload.",
         ],
       },
       {
         label: "Partner app",
         body: [
           "A collection of smaller optimisations, including one that failed. Partner bonuses were welcomed in every conversation and scrapped after six months: the bonus rarely reached the drivers it was meant to reach.",
-          "The one that worked was smaller. Small removal companies book jobs from their phones during rides, and a fixed header blocked scrolling — they could not read the offers at all. Rearranging the information made immediate bookings possible.",
+          "Fixing the mobile app had a significant impact on daily hiccups. Removing sticky components gave drivers easier access to the full logistics information.",
         ],
       },
       {
         label: "Rebrand concept",
         body: [
-          "Movinga assisted people in changing their life significantly. That was in front of everyone and hardly used, while business as usual dominated the day.",
-          "Looking at the traditions of the trade instead of current trends kept the emotion in. Few and simple elements let non-designers work with the brand confidently — flexibility rather than breaking points.",
+          "When I started at Movinga, we moved as a family and I booked their service. That insight, of understanding that Movinga assisted people and families in arriving in a new life chapter, resonated with me throughout.",
+          "Hence this understanding became the foundation of Movinga’s rebranding concept.",
         ],
       },
     ],
@@ -222,7 +230,7 @@ export const PROJECTS: Project[] = [
     maturity: "Delivered",
     directions: ["building", "design"],
     lead:
-      "The site for a graphic novel about rebuilding a research tower at Scotty Creek — Canada's first Indigenous-led research station, burnt down in 2022 — and for the research tool that grew out of it.",
+      "The site for a scientific graphic novel about rebuilding a research tower at Scotty Creek Research Station, Canada’s first Indigenous-led research station, burnt down in a huge wildfire in late 2022.",
     views: ["Graphic Novel", "AS Dehcho", "Adoption Scenarios"],
     shots: ["/work/fire-on-the-land/01.jpg", "/work/fire-on-the-land/02.jpg", "/work/fire-on-the-land/03.jpg"],
     tech: "Static HTML, CSS and JavaScript, no build step · Sentinel-2 L2A via the Copernicus Data Space · History API routing",
@@ -230,8 +238,8 @@ export const PROJECTS: Project[] = [
       {
         label: "Three areas",
         body: [
-          "The graphic novel holds character studies, script and storyboards. AS Dehcho is a hand-drawn display font made for this project: it carries the Dene orthography of the Dehcho region (ą́ ę́ ł ʔ ǫ́ ų́) and the speech-bubble lettering in one family.",
-          "Adoption Scenarios is the tool. It reads post-fire forests by function rather than by origin: which reforestation trajectory is climate-adapted, economically viable and carbon-effective at the same time — and how do you make that trackable.",
+          "The graphic novel holds character studies, script and storyboards. AS Dehcho is a hand-drawn handwriting font, still in progress, made for this project: it carries the Dene letters and diacritics of the Dehcho region (ą́ ę́ ł ʔ ǫ́ ų́) and the speech-bubble lettering in one family.",
+          "Adoption Scenarios is the tool, speculative for now. It reads post-fire forests by function rather than by origin: which reforestation trajectory is climate-adapted, economically viable and carbon-effective at the same time — and how do you make that trackable.",
         ],
       },
       {

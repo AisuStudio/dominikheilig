@@ -38,6 +38,8 @@ export default function ProjectViews({
             sizes="(max-width: 700px) 100vw, 66vw"
             style={{ objectFit: "contain" }}
             priority={aktiv === 0}
+            /* Bewegte GIFs laufen am Bilddienst vorbei — sonst friert er sie auf ein Bild ein. */
+            unoptimized={bild.endsWith(".gif")}
           />
         ) : (
           <div className="grid h-full place-items-center">
