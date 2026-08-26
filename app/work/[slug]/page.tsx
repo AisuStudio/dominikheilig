@@ -35,7 +35,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <ProjectViews views={project.views} shots={project.shots} visit={project.visit} titel={project.title} />
 
         {/* Titel und Vorspann, „Built with" daneben */}
-        <div className="col-main block-start">
+        <div className="col-main mt-100">
           <h1 className="t-h2">{project.title}</h1>
           <div className="meta-row mt-10 t-eyebrow">
             <span>{project.maturity}</span>
@@ -53,7 +53,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
         </div>
-        <div className="col-rail block-start">
+        <div className="col-rail mt-100">
           <h2 className="t-h3">Built with</h2>
           <ul className="code-list mt-15 t-code">
             {project.tech.split(" · ").map((t) => (
@@ -68,7 +68,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         ))}
 
         {/* Schluss — Linie, Frage, Knopf */}
-        <div className="col-body block-start">
+        <div className="col-body mt-100">
           <div className="rule" style={{ background: "#2a2a2a", opacity: 1 }} />
           <div className="mt-50 flex flex-wrap items-end gap-50">
             <p className="t-h2">
@@ -100,8 +100,8 @@ function Abschnitt({
 }) {
   return (
     <>
-      <p className="section-label t-eyebrow col-label block-start">{label}</p>
-      <div className="col-body block-start space-y-10">
+      <p className="section-label t-eyebrow col-label mt-100">{label}</p>
+      <div className="col-body mt-100 space-y-10">
         {body.map((absatz, i) => (
           <p key={i} className="t-body">{mitVerweisen(absatz)}</p>
         ))}
@@ -118,7 +118,7 @@ function Abschnitt({
         ) : null}
       </div>
       {rail ? (
-        <div className="col-rail block-start">
+        <div className="col-rail mt-100">
           <h2 className="t-h3">{rail.label}</h2>
           <p className="mt-15 t-code whitespace-pre-line">{rail.lines.join("\n")}</p>
         </div>

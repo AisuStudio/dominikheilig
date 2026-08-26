@@ -90,7 +90,10 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 
 /* ---- Raster ---- */
 .page  { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--margin); }
-.grid12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); }
+/* Nur Spaltenabstand. Zeilen bekommen ausdrücklich keinen — sonst käme zu jedem
+   `mt-` der Rinnstein dazu und aus 100 würden 120. So gilt: Klassenname = Pixel,
+   und der Abstand steht dort, wo er gemeint ist. */
+.grid12 { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--gutter); row-gap: 0; }
 .col-content { grid-column: 2 / -1; }
 
 /* Unter 700 px klappt das 12er-Raster zusammen: jedes direkte Kind über die volle
@@ -197,11 +200,6 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
    12-px-Marke sitzt auf der Versalie der ersten Zeile ihres Fließtextes.
    4,54 px: die 12-px-Marke setzt höher an als der 20/30-Fließtext. */
 .section-label { padding-top: 4.54px; }
-
-/* Abstand zwischen den großen Blöcken der Projektseite: 100 px, wie in Figma
-   („Body", gap 100). Die Rasterzeile trägt den Zwischenraum schon, deshalb steht
-   hier nur der Rest — sonst kämen 120 heraus. */
-.block-start { margin-top: calc(100px - var(--gutter)); }
 
 /* Zeile unter dem Projekttitel: Reifegrad links, die Richtungen des Projekts
    rechts daneben. 100 px trennen die beiden Gruppen, 20 px die Richtungen
