@@ -284,6 +284,85 @@ export const PROJECTS: Project[] = [
   },
 
   {
+    slug: "normann",
+    title: "NORMANN",
+    year: "2026",
+    mini: "Public award procedure, documented as you go",
+    maturity: "Working Prototype",
+    directions: ["management", "building"],
+    lead:
+      "A rule set for German public procurement below the EU thresholds, for Berlin and Brandenburg. Six steps pick the award procedure and write the file note while the decisions are being made. The subject comes out of an exchange with the consultancy Meile + Stein that has been running since 2025 — the same thread as the Lean Calculator and the procurement ladder in FullerHome. Work in progress: a running piece of research, not an official service and not legal advice.",
+    views: ["Vorhaben", "Vorgang", "Werte", "Angaben prüfen", "Ergebnis", "Vermerk"],
+    shots: [
+      "/work/normann/vorhaben.jpg",
+      "/work/normann/vorgang.jpg",
+      "/work/normann/werte.jpg",
+      "/work/normann/pruefen.jpg",
+      "/work/normann/ergebnis.jpg",
+      "/work/normann/vermerk.jpg",
+    ],
+    tech: "Static HTML, CSS and JavaScript, no build step · no dependencies, nothing stored or transmitted · self-hosted fonts (Urbanist, Rubik) · 43 rule tests in Node",
+    sections: [
+      {
+        label: "The finding",
+        body: [
+          "A contracting authority has to read three sources with three different dates — federal, state, municipal — to know which procedure is permitted at which contract value. It then has to justify that choice in a file note, which by experience gets written too late.",
+          "Those are not two problems. Choosing the procedure and documenting it are the same act, split into two work steps.",
+        ],
+      },
+      {
+        label: "How it works",
+        body: [
+          "Six steps: the project, the kind of contract, the values, a check of the entries, the result, the file note. Estimating the value, picking the procedure and splitting into lots are exactly the decisions the note has to justify, so the note is written as they happen rather than reconstructed afterwards.",
+          "The protocol is append-only. A changed entry does not overwrite anything, it produces a correction — which is what the law requires anyway.",
+        ],
+      },
+      {
+        label: "Hardest call",
+        body: [
+          "Never say \u201cyou may\u201d. The tool reproduces the rule with its source; it does not apply it to the case, weigh discretion or recommend one of two permitted routes. That is the line to legal services, and it is the reason the thing can exist at all.",
+          "The whole area above the EU thresholds is deliberately out of scope — there are tools and law firms for that. The one exception is planning services, where the tool detects that the threshold is crossed, because adding the lots together leads exactly there.",
+        ],
+      },
+      {
+        label: "What keeps it honest",
+        body: [
+          "Every statement carries its source, its date and its verification status. Rules without a verified primary source are not dropped, they are marked: the EU thresholds are flagged as unverified and shown that way in the result.",
+          "Every rule that produces a statement has a test case — 43 checks, run without a build step.",
+        ],
+        rail: {
+          label: "Covered today",
+          lines: [
+            "Brandenburg municipality",
+            "— works and planning",
+            "Land Berlin — planning",
+            "Land Brandenburg — open",
+            "",
+            "43 rule tests",
+            "rule base 2025-06-19",
+          ],
+        },
+      },
+      {
+        label: "Why there is no login",
+        body: [
+          "No account, no storage, no transmission, no installation. Those are the four properties that trigger an IT approval inside a public authority. Without them it is not an application but a reference work, and nobody has to ask permission to use one.",
+          "The exit is paper: the flow ends with printing. The printout goes into the file and gets signed. From there the paper counts, not the log.",
+        ],
+      },
+      {
+        label: "What it does not solve",
+        body: [
+          "An unfilled post is not filled by a tool. Where a norm is open, a rule set can put the question but not answer it. Unrealistic cost estimates and political deadline pressure are an incentive problem, not a knowledge problem.",
+          "What is left is the part made of knowing the rules, keeping them current and documenting discipline. That is less than the topic promises and more than exists today.",
+        ],
+      },
+    ],
+    visit: "https://aisustudio.github.io/Normann/",
+    readMore: "https://github.com/AisuStudio/Normann",
+  },
+
+  {
     slug: "fullerhome",
     title: "FullerHome",
     year: "2026",
