@@ -52,13 +52,14 @@ export const PROJECTS: Project[] = [
     directions: ["building", "design"],
     lead:
       "A browser-based handwriting font editor with a marketplace attached. You draw the glyphs, it builds a real font file — OTF, UFO, variable — and publishes it without anyone having to make an account. Landing page, app and its own cookie-free analytics.",
-    views: ["Grid", "Typer", "Writer", "Marketplace", "Font specimen"],
+    views: ["Grid", "Typer", "Writer", "Marketplace", "Font specimen", "Analytics"],
     shots: [
       "/work/fontane/grid.jpg",
       "/work/fontane/typer.jpg",
       "/work/fontane/writer.jpg",
       "/work/fontane/marketplace.jpg",
       "/work/fontane/specimen.jpg",
+      "/work/fontane/analytics.jpg",
     ],
     tech: "opentype.js · perfect-freehand · Supabase · UFO export + Glyphs plugin · own variable-font build",
     sections: [
