@@ -7,7 +7,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Dominik Heilig — Product Manager",
   description:
-    "Product Manager who designs and builds, and helps teams through the gaps. Based in Berlin.",
+    "Design-led Product Manager and agentic builder with 15+ years in tech, based in Berlin. Available for freelance work, permanent roles and collaborations.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

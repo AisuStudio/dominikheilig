@@ -736,4 +736,4 @@ export const DOORS = [
 export const EMAIL = "hi@dominikheilig.com";
 
 export const BIO =
-  "Dominik is a design led Product Manager and agentic builder with 15+ years in tech, based in Berlin. He is currently available for freelance and permanent.";
+  "Dominik is a design-led Product Manager and agentic builder with 15+ years in tech, based in Berlin. Reach out for freelance work, permanent roles and collaborations.";
