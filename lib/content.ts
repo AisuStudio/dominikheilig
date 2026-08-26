@@ -51,7 +51,9 @@ export const PROJECTS: Project[] = [
     maturity: "Mature Prototype",
     directions: ["building", "design"],
     lead:
-      "A browser-based handwriting font editor with a marketplace attached. You draw the glyphs, it builds a real font file — OTF, UFO, variable — and publishes it without anyone having to make an account. Landing page, app and its own cookie-free analytics.",
+      "A free browser-based handwriting-only font editor with an open marketplace. Just draw your glyphs, ligatures, contextual alternates, or any other necessary symbols.\n\n" +
+      "Fontane.Studio builds a real OTF font file. With its own .fff project file — a Fontane Font File — you can switch between a tablet and a PC. All without having to make an account.\n\n" +
+      "It also comes with its own cookie-free analytics.",
     views: ["Grid", "Typer", "Writer", "Marketplace", "Font specimen", "Analytics"],
     shots: [
       "/work/fontane/grid.jpg",
@@ -61,32 +63,41 @@ export const PROJECTS: Project[] = [
       "/work/fontane/specimen.jpg",
       "/work/fontane/analytics.jpg",
     ],
-    tech: "opentype.js · perfect-freehand · Supabase · UFO export + Glyphs plugin · own variable-font build",
+    tech: "opentype.js · perfect-freehand · Supabase · UFO & JSON export",
     sections: [
       {
-        label: "Hardest call",
+        label: "The story",
         body: [
-          "Guard the marketplace with a publish gate built on server-stamped drawing events instead of accounts. Making hobbyists sign up would have cost more than the abuse it prevents.",
-          "The gate can be fooled by someone patient enough. That was the trade: a barrier that stops casual reuse and lets every honest user through, against one that stops everyone equally.",
+          "As a seasonal partnership manager at the Comic Invasion Berlin festival, I’ve been organising Comic Font workshops since 2024, together with the type designer Sylvain Mazas and with the generous support of the Glyphs.App spearheads Rainer and Georg.",
+          "As Glyphs.App only works on macOS, artists with iPads or Windows PCs were not able to participate. And with the advent of AI building I gave it a shot.",
+        ],
+      },
+      {
+        label: "The publishing & provenance gate",
+        body: [
+          "Anyone could have uploaded a licensed typeface like Helvetica and published it as free. An account would not have stopped that: being signed in says nothing about where a font came from.",
+          "So the gate is built on server-stamped drawing events instead. To publish, the strokes have to have been drawn in Fontane and the server has to have seen them happen. That keeps other people’s typefaces out, and the marketplace to fonts that were made here.",
+          "You can find more about my security process [here ↗](https://cnsl.aisu.studio/note/dominik-heilig/documentation/security-and-privacy-check).",
         ],
       },
       {
         label: "Process",
         body: [
-          "Prototype first, measure second. The editor was rebuilt from scratch once, after the first version made drawing feel like fighting the tool.",
-          "The variable-font build and the Hangul composition — 24 drawn jamo into 11,172 syllables — were spikes on branches, kept only once they proved out.",
+          "A first rough prototype based on a comprehensive vision",
+          "Testing, iterating and getting some feedback, repeat",
+          "Add, try, review, strip, develop features further",
+          "After a deep UX, security, bug-fixing and feature review session the editor was rebuilt from scratch, as the first version made drawing feel like fighting the tool.",
         ],
       },
       {
         label: "Result",
         body: [
-          "366 page views, 134 sessions. Nine people drew something, six exported a font.",
-          "Small numbers — and they carried the only decision that mattered. People were leaving before they drew: median visit 25 seconds, median time to first stroke 44 seconds. The problem was the first minute, not the font engine.",
-          "The numbers were wrong before they were right. Several panels were confidently wrong, and one whole event type had been going to the database and bouncing off a constraint for two weeks.",
+          "It’s become a comprehensively sweet, easy and quite fast tool to use. I am looking forward to building all the fonts that are waiting in my head.",
+          "Users can give feedback, report bugs or suggest improvements through the app, so I am curious what comes up — the last feedback was incredibly helpful.",
         ],
         rail: {
           label: "In numbers",
-          lines: ["366 page views", "134 sessions", "9 drew", "6 exported a font", "", "25 s median visit", "44 s to first stroke"],
+          lines: ["565 visits", "280 sessions", "14 drew", "8 exported a font", "1 published", "", "25 s median visit", "52 s to first stroke"],
         },
       },
     ],
@@ -102,7 +113,9 @@ export const PROJECTS: Project[] = [
     maturity: "Mature Prototype",
     directions: ["building", "management"],
     lead:
-      "Short for console — like a gaming console, a small tool that does a lot. Seven tools share one set of projects: a task tracker with one-click time tracking, a calendar, a node editor, a routine scheduler, a note pad, a chat and a capture-first log. Notes can be published under their own URL.",
+      "CNSL, short for Console, was a pocket console idea I had back in 2006 — when Windows Mobile on my HTC was too cumbersome to feed the device with ideas and thoughts.\n\n" +
+      "After my favourite time-tracking app discontinued its services I started building my own, and added features as I needed them.\n\n" +
+      "CNSL became an integral part of my daily workflow.",
     views: [
       "Tracker",
       "Note Pad",
@@ -123,33 +136,33 @@ export const PROJECTS: Project[] = [
       "/work/cnsl/demo-blurp.jpg",
       "/work/cnsl/note.jpg",
     ],
-    tech: "Next.js · Supabase · Prisma · TipTap · dnd-kit · fractional-indexing · Web Push",
+    tech: "Next.js · Supabase · Prisma · TipTap · dnd-kit · fractional-indexing · Web Push · HeroTour",
     sections: [
       {
         label: "How it works",
         body: [
-          "The tools sit side by side over the same projects. The tracker holds the tasks and runs a timer on any of them; the calendar puts them on dates; the scheduler turns a repeated sequence into timed steps; the noder draws a task as a graph of steps and branches; the note pad, the chat and the log carry the text around the work.",
-          "A task is edited where it stands — there is no detail dialog to open. The time tracker is one click on the task itself.",
+          "The tools sit side by side over the same projects. The tracker holds the tasks and runs a timer on one or many of them; the calendar puts them on dates; the scheduler turns a repeated sequence into timed steps; the noder can automate a chain of tasks connected to your LLM of choice; the note pad became my little micro publisher; and the chat works inside projects.",
+          "The time tracker, where everything started, is one click on the task itself. On top of that my phone’s PWA carries a badge while a task is running — something I often forgot back in Toggl.",
         ],
       },
       {
         label: "Publishing",
         body: [
-          "A note can be given its own URL under an author handle — /note/handle/slug — and made public or access-controlled. The published page is plain and readable, and the data stays in the same place as the rest.",
-          "Projects can be shared by email with editor or viewer roles, or opened for public submission so contributors add items without an account.",
+          "A CNSL note can be given its own URL under an author handle — /note/handle/slug — and made public or access-controlled. The published page is plain and readable, and the data stays in the same place as the rest.",
+          "Projects can be shared with editor, viewer or contributor roles, or opened for public submission so contributors add items without having an account.",
         ],
       },
       {
         label: "Hardest call",
         body: [
-          "Ship the first phase entirely in the browser: everything in local storage, nothing leaving the device, no account.",
-          "That cost sharing and a second device. It bought a product that could be reshaped weekly with nothing to migrate and nothing to breach while the model was still moving. The backend came later, once the model had settled.",
+          "The first version kept everything in the browser. Tasks lived in local storage — no server, no account. That ruled out sharing and a second device.",
+          "The reason was that the shape of the product changed every week. With nothing in a database there was nothing to migrate when a view changed, and with no data on a server there was nothing that could leak while the structure was still moving. The backend came once it had settled.",
         ],
       },
       {
         label: "Process",
         body: [
-          "The board seeds itself from CNSL's own roadmap on first load. The app tracks its own development, which means every missing feature is visible in the tool while you use it.",
+          "A first simple and extremely cut-down prototype, from a very comprehensive and gigantomanically matured vision. By now the board seeds itself from CNSL’s own roadmap on first load. The app tracks its own development, which means every missing feature is visible in the tool while you use it.",
           "The landing page runs the real components rather than pictures of them: the tour cycles through all seven tools with sample data.",
         ],
       },
