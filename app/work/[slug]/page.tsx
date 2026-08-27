@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import ProjectViews from "@/components/ProjectViews";
+import ClosingQuestion from "@/components/ClosingQuestion";
 import { DIRECTIONS, EMAIL, PROJECTS } from "@/lib/content";
 
 /**
@@ -71,11 +72,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div className="col-body mt-100">
           <div className="rule" style={{ background: "#2a2a2a", opacity: 1 }} />
           <div className="mt-50 flex flex-wrap items-end gap-50">
-            <p className="t-h2">
-              <span className="block">What can I </span>
-              <span className="block">get out of </span>
-              <span className="block">your way?</span>
-            </p>
+            <ClosingQuestion />
             <a href={`mailto:${EMAIL}`} className="btn-outline px-50 py-15 t-p2">Reach out</a>
           </div>
         </div>

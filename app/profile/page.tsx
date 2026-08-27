@@ -1,5 +1,6 @@
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
+import ClosingQuestion from "@/components/ClosingQuestion";
 import { EMAIL } from "@/lib/content";
 
 export const metadata = { title: "About — Dominik Heilig" };
@@ -77,11 +78,7 @@ export default function AboutPage() {
           {SKILLS_RECHTS.map((g) => <SkillGruppe key={g.h} {...g} />)}
         </div>
         <div className="col-rail mt-15 flex flex-col items-start justify-end">
-          <p className="t-h2">
-            <span className="block">What can I </span>
-            <span className="block">get out of </span>
-            <span className="block">your way?</span>
-          </p>
+          <ClosingQuestion />
           <a href={`mailto:${EMAIL}`} className="btn-outline mt-50 px-50 py-15 t-p2">Reach out</a>
         </div>
 
