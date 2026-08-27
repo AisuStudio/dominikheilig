@@ -214,6 +214,45 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 }
 .meta-row > ul { display: flex; flex-wrap: wrap; column-gap: var(--spacing-20); row-gap: var(--spacing-10); }
 
+/* Ansichten. Auf dem Desktop liegen alle Karten übereinander und nur die
+   gewählte ist sichtbar; die Beschriftung darunter entfällt, dafür steht
+   rechts die Umschalterliste. */
+.views-strip { position: relative; aspect-ratio: 811 / 427; }
+.view-card   { position: absolute; inset: 0; }
+.view-card[data-aktiv="false"] { display: none; }
+.view-frame  { position: relative; height: 100%; overflow: hidden;
+               border-radius: var(--dh-round-md); border: var(--dh-thin) solid #2a2a2a; }
+.view-label  { display: none; }
+
+/* Telefon: dieselben Karten nebeneinander, wischbar und einrastend. Die Karte
+   ist 88 vw breit, damit die nächste hereinlugt — sonst sieht niemand, dass es
+   weitergeht. `scroll-padding-inline` sorgt dafür, dass eine eingerastete Karte
+   am Seitenrand steht und nicht am Bildschirmrand. */
+@media (max-width: 700px) {
+  .views-strip {
+    aspect-ratio: auto;
+    display: flex; gap: var(--spacing-20);
+    overflow-x: auto; overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    /* Aus der Randspalte heraus über die volle Breite, damit die Rolle am
+       Bildschirmrand endet und nicht 20 px davor abgeschnitten wirkt. */
+    margin-inline: calc(-1 * var(--margin)); padding-inline: var(--margin);
+    scroll-padding-inline: var(--margin);
+    scrollbar-width: none;
+  }
+  .views-strip::-webkit-scrollbar { display: none; }
+  .view-card { position: static; flex: 0 0 88%; scroll-snap-align: start; }
+  .view-card[data-aktiv="false"] { display: block; }
+  .view-frame { aspect-ratio: 811 / 427; height: auto; }
+  .view-label { display: block; padding-top: 10px; padding-bottom: 10px;
+                border-bottom: var(--dh-thin) solid currentColor; }
+  /* Die Umschalterliste wäre dieselbe Liste ein zweites Mal. */
+  .view-switch { display: none; }
+  /* Ohne die Liste stünden zwei Abstände von 50 übereinander — der der
+     Leiste und der des Verweises. */
+  .view-visit { margin-top: 0; }
+}
+
 /* Umschalterzeile der Projektseite — Bauteil Group 8: Text DH/H3, Linie darunter,
    beim Berühren beides DH/LINK. Aktiv/inaktiv steuert die Deckkraft im Bauteil. */
 .rail-row {
@@ -281,6 +320,18 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
   .item-mini  { order: 3; font-size: 15px; line-height: 25.94px; }
   .axis-i     { order: 4; }
   .axis-can   { display: none; }
+}
+
+/* Kopfzeile. Auf dem Telefon 20/25 statt 22 (DH/Mob/H2), und mit Krume tritt
+   ein Zurück-Winkel an die Stelle des Namens. Die Klappe auf die übrigen
+   Projekte bleibt — sie ist auf dem Telefon der einzige Weg zwischen den
+   Projekten. */
+.header-back { display: none; margin-right: 10px; opacity: var(--dh-soft-dim); }
+
+@media (max-width: 700px) {
+  .site-header .t-h3 { font-size: 20px; line-height: 25px; }
+  .has-crumb .header-back { display: inline-flex; }
+  .has-crumb .header-name { display: none; }
 }
 
 .rule { height: var(--dh-thin); background: currentColor; opacity: .35; }
