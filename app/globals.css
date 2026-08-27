@@ -60,6 +60,10 @@
   --page-max: 1280px;
   --margin: var(--spacing-20);
   --gutter: var(--spacing-20);
+  /* Höhe der Kopfzeile. Auf dem Telefon kommt Luft nach oben dazu — dort klebt
+     die Zeile sonst am oberen Rand — plus der sichere Bereich, falls die Seite
+     einmal als App vom Startbildschirm läuft und eine Aussparung im Weg ist. */
+  --header-h: 72px;
 
   /* Kartendrehung — Werte von berd.xyz/neverbealone übernommen */
   --flip-dur: 650ms;
@@ -205,14 +209,46 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
    4,54 px: die 12-px-Marke setzt höher an als der 20/30-Fließtext. */
 .section-label { padding-top: 4.54px; }
 
-/* Zeile unter dem Projekttitel: Reifegrad links, die Richtungen des Projekts
-   rechts daneben. 100 px trennen die beiden Gruppen, 20 px die Richtungen
-   untereinander; beim Umbrechen rücken die Zeilen auf 10 px zusammen. */
-.meta-row {
-  display: flex; flex-wrap: wrap; align-items: baseline;
-  column-gap: var(--spacing-100); row-gap: var(--spacing-10);
+
+/* Abstände auf dem Telefon für Seiten mit beschrifteten Abschnitten —
+   Projektseiten und Impressum/Datenschutz — nach `02 · Projektseite · Mobil`.
+   Dort ist der Takt enger als auf dem Desktop: 70 zwischen den großen Blöcken
+   statt 100, und nur 20 zwischen einer Abschnittsmarke und ihrem Text — die
+   beiden stehen dort untereinander statt nebeneinander und gehören sichtbar
+   zusammen. Der Verweis unter dem Karussell rückt auf 20 heran. */
+/* Telefon: der Bildteil klebt unter der Kopfzeile, damit zu jedem Abschnitt ein
+   Bild steht. Auf dem Desktop nicht — dort liegt es ohnehin auf gleicher Höhe
+   neben dem Text. Er braucht eine deckende Fläche, weil der Text darunter
+   durchläuft, und die Kopfzeile darüber genauso. */
+@media (max-width: 700px) {
+  .project-top {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 20;
+    background: var(--dh-dark);
+    /* Über die volle Breite, damit die wischbare Rolle am Bildschirmrand endet.
+       Die Innenpolsterung hebt den negativen Rand wieder auf — die Rolle darin
+       rechnet also mit derselben Breite wie vorher. */
+    margin-inline: calc(-1 * var(--margin));
+    padding-inline: var(--margin);
+    padding-bottom: var(--spacing-20);
+  }
+  /* Zwischen Kopfzeile und Bild steht DH/Mob/Space Medium. Gemessen ab dem
+     Kopfzeilen-Kasten: der trägt unter der Krume noch 26 px Leerraum, weil
+     die Zeile in ihrem 72-px-Band zentriert steht — sichtbar sind es also
+     rund 46. Ab der Schrift gerechnet wären 20 ein negativer Abstand. */
+  .project-top .views-strip { margin-top: var(--spacing-20); }
+  /* Ohne die Umschalterliste stünde der Verweis 50 unter der Rolle. Im
+     klebenden Block ist das verschenkte Höhe. */
+  .project-top .col-rail { margin-top: var(--spacing-20); }
+  .site-header { background: var(--dh-dark); }
 }
-.meta-row > ul { display: flex; flex-wrap: wrap; column-gap: var(--spacing-20); row-gap: var(--spacing-10); }
+
+@media (max-width: 700px) {
+  .page-sections .mt-100 { margin-top: 70px; }
+  .page-sections .section-label + .col-body { margin-top: 20px; }
+  .page-sections .views-strip + .col-rail { margin-top: 20px; }
+}
 
 /* Ansichten. Auf dem Desktop liegen alle Karten übereinander und nur die
    gewählte ist sichtbar; die Beschriftung darunter entfällt, dafür steht
@@ -298,7 +334,31 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
    irgendetwas zu verschieben. */
 .item-card  { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 10px; }
 .item-title { grid-column: 1; grid-row: 1; }
-.item-axes  { grid-column: 2; grid-row: 1; display: grid; row-gap: 5px; justify-items: start; }
+/* Branchenknöpfe der Startseite. Gold, weil die Branche im Eintrag die
+   What-Achse ist. Ruhezustand halbe Deckkraft; berührt sieht ein Knopf aus wie
+   der gewählte — das ist die Zusage, die ein Klick einlöst. */
+.chip {
+  cursor: pointer; white-space: nowrap; border-radius: 100px;
+  padding: var(--spacing-10) var(--spacing-20);
+  background: var(--dh-what-20); color: var(--dh-what);
+  opacity: .5; transition: opacity .3s ease-out;
+}
+.chip[aria-pressed="true"],
+.chip:is(:hover, :focus-visible) { opacity: 1; }
+
+/* Telefon: die Schrift ist mit DH/Mob/Eyebrow schon auf 10 px, kleiner geht
+   nicht. Kompakt wird die Reihe über die Polsterung und den Abstand — 5/15
+   statt 10/20, Abstand 10 statt 20. Damit passen drei Knöpfe in eine Zeile,
+   wo vorher zwei standen, und der Block über der Liste halbiert sich. */
+@media (max-width: 700px) {
+  .chip { padding: var(--spacing-5) var(--spacing-15); }
+}
+
+/* Der Achsenblock selbst — dieselben drei Zeilen im Listeneintrag wie auf der
+   Projektseite. Wo er steht, sagt die Seite: `.axes-list` setzt ihn in die
+   zweite Rasterspalte des Eintrags, `.axes-page` steht schlicht im Fluss. */
+.item-axes  { display: grid; row-gap: 5px; justify-items: start; }
+.axes-list  { grid-column: 2; grid-row: 1; }
 .item-mini  { grid-column: 1 / -1; grid-row: 2; }
 
 /* Reifegrad als Punktreihe: fünf Stufen, offene bei 20 %. 10 × 5 px, Radius 60. */
@@ -314,13 +374,28 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
   /* align-items bleibt sonst auf `center` aus der Desktop-Regel stehen — in
      der Spalte ist das die Waagerechte, und alles rückte in die Mitte. */
   .item-card  { display: flex; flex-direction: column; align-items: flex-start; }
-  .item-axes  { display: contents; }
-  .axis-what  { order: 1; }
-  .item-title { order: 2; line-height: 1; }
-  .item-mini  { order: 3; font-size: 15px; line-height: 25.94px; }
-  .axis-i     { order: 4; }
-  .axis-can   { display: none; }
+  .axes-list  { display: contents; }
+  /* Nur der Listeneintrag sortiert um — die Projektseite behält die Reihenfolge
+     Branche, Rollen, Reifegrad. */
+  .axes-list .axis-what { order: 1; }
+  .item-title           { order: 2; line-height: 1; }
+  .item-mini            { order: 3; font-size: 15px; line-height: 25.94px; }
+  .axes-list .axis-i    { order: 4; }
+  /* Nur in der Liste: drei Wörter, von denen meist eins ausgegraut ist, sind
+     auf 335 px zu viel Rauschen. Auf der Projektseite bleiben sie stehen. */
+  .axes-list .axis-can { display: none; }
+  /* Dort dieselbe kleine Marke wie in der Liste, nach `02 · Projektseite · Mobil`. */
+  .axes-page { font-size: 10px; font-weight: 600; letter-spacing: 1px; }
 }
+
+/* Die Kopfzeile trägt ihre Höhe aus dem Regler; das Polster oben zählt hinein
+   (border-box), damit der Inhalt tiefer sitzt und die Zeile trotzdem ihre
+   72 px Innenraum behält. */
+/* z-index ausdrücklich hier und nicht als Klasse: `position: sticky` erzeugt
+   immer einen Stapelkontext, auch bei `z-index: auto`. Ohne eigene Ebene liegt
+   die Kopfzeile damit auf 0 wie der Seiteninhalt — und alles, was später im
+   Markup steht, malt darüber, auch über die aufgeklappte Projektliste. */
+.site-header { height: var(--header-h); z-index: 30; }
 
 /* Kopfzeile. Auf dem Telefon 20/25 statt 22 (DH/Mob/H2), und mit Krume tritt
    ein Zurück-Winkel an die Stelle des Namens. Die Klappe auf die übrigen
@@ -329,6 +404,8 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 .header-back { display: none; margin-right: 10px; opacity: var(--dh-soft-dim); }
 
 @media (max-width: 700px) {
+  :root { --header-h: calc(72px + var(--spacing-20) + env(safe-area-inset-top, 0px)); }
+  .site-header { padding-top: calc(var(--spacing-20) + env(safe-area-inset-top, 0px)); }
   .site-header .t-h3 { font-size: 20px; line-height: 25px; }
   .has-crumb .header-back { display: inline-flex; }
   .has-crumb .header-name { display: none; }
@@ -360,7 +437,7 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
   z-index: 40;
   width: 320.79px;
   max-width: calc(100vw - 2 * var(--margin));
-  max-height: calc(100dvh - 72px - var(--spacing-50));
+  max-height: calc(100dvh - var(--header-h) - var(--spacing-50));
   overflow-y: auto;
   background: var(--dh-dark);
   overscroll-behavior: contain;
@@ -385,10 +462,10 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 @media (max-width: 700px) {
   .crumb-menu {
     position: fixed;
-    inset: 72px var(--margin) auto;
+    inset: var(--header-h) var(--margin) auto;
     width: auto;
     max-width: none;
-    max-height: calc(100dvh - 72px - var(--spacing-50));
+    max-height: calc(100dvh - var(--header-h) - var(--spacing-50));
   }
 }
 

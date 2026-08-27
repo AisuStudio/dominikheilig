@@ -3,14 +3,15 @@ import Footer from "@/components/Footer";
 import ClosingQuestion from "@/components/ClosingQuestion";
 import { EMAIL } from "@/lib/content";
 
-export const metadata = { title: "About — Dominik Heilig" };
+export const metadata = { title: "Profile — Dominik Heilig" };
 
 /**
- * About nach Figma „About / Case-consistent" (74:103).
+ * Profile — nach dem überarbeiteten Rahmen „Homepage / About" (35:1006).
  *
- * Zwei Rhythmen mit Absicht: oben ein beschrifteter Abschnitt — Marke in Spalte 1–2,
- * Text in 3–8 — wie auf der Fallseite. Unten öffnet sich die Seite wieder in das
- * zweispaltige Raster, daneben in Spalte 9–12 der Schluss, unten bündig mit dem Raster.
+ * Drei große Überschriften, jede in einer der drei Türfarben: Profile in Gold
+ * (What), Skills in Mint (Can), Approach in Violett (I). Dieselbe Zuordnung
+ * wie im Hero, in den Listeneinträgen und in der Schlussfrage — die Seite
+ * sagt damit dreimal dasselbe System, nur an anderer Stelle.
  */
 
 const LEAD =
@@ -30,16 +31,32 @@ const SKILLS_LINKS = [
       "management, cross-functional leadership, go-to-market",
     ],
   },
-  { h: "Languages", b: ["German (native)", "English (C1)", "Russian (B1)"] },
+  { h: "Languages", b: ["German (native)", "English (C1)"] },
 ];
 
 const SKILLS_RECHTS = [
   {
     h: "Build / AI",
-    b: ["rapid prototyping and shipping with agentic AI tooling (Claude Code, TypeScript, Next.js, Tailwind, Supabase, Vercel, WebGL)"],
+    b: ["Rapid prototyping and shipping with agentic AI tooling (Claude Code, TypeScript, Next.js, Tailwind, Supabase, Vercel, WebGL)"],
   },
   { h: "Design", b: ["Agile, Scrum, Kanban, rapid prototyping, workshop design & facilitation, design sprints"] },
-  { h: "Tools", b: ["Figma, Adobe Suite, Jira, Miro, Google Workspace"] },
+  { h: "Tools", b: ["Claude Code, Figma, Adobe Suite, Jira, Miro, Google Workspace"] },
+];
+
+/** Der große Block: Titelzeile und vier Sätze, die die These aufmachen. */
+const APPROACH_GROSS = [
+  "Prototype Thinking",
+  "These days I build digital things incredibly faster and more versatile than I could have planned.",
+  "Planning a digital product was the recommended order than just building it. It was a lot cheaper.",
+  "From waterfall to agile, we planned as granular as we could (or were allowed to), often prototyped, but built last.",
+  "AI is evolving that equation: a first working version is now often faster to build and share than to plan.",
+];
+
+const APPROACH_KLEIN = [
+  "Most likely Prototype Thinking is the way of working. At least it's how I work now: start from a (comprehensive) vision, build a proof of concept, an MVP, use it, watch where it breaks.",
+  "Requirements don't go away — knowing what I want is still half the craft — but they change shape: from documents written up front to skills and guardrails written along the way. Design Thinking wanted us to understand before we build; we still do — the understanding just arrives in increments, one working version at a time.",
+  "Apparently in AI-driven companies this is already becoming team practice: skills, plug-ins and guardrails as shared assets, building blocks as a common library, prototypes landing inside existing architecture instead of beside it. This also opens up the window to blend disciplines and enable participation in the process.",
+  "It comes with new breaking points and pitfalls, but I guess this is the new way.",
 ];
 
 function SkillGruppe({ h, b }: { h: string; b: string[] }) {
@@ -47,7 +64,7 @@ function SkillGruppe({ h, b }: { h: string; b: string[] }) {
     <div>
       <h3 className="t-h3">{h}</h3>
       {b.map((zeile, i) => (
-        <p key={i} className={`t-p2 ${i === 0 ? "mt-15" : "mt-15"}`}>{zeile}</p>
+        <p key={i} className="mt-15 t-p2" style={{ opacity: "var(--dh-soft-dim)" }}>{zeile}</p>
       ))}
     </div>
   );
@@ -57,8 +74,8 @@ export default function AboutPage() {
   return (
     <>
       <SiteHeader />
-      <div className="page grid12 min-h-dvh content-start">
-        <h1 className="col-span-full t-h2 mt-100">About</h1>
+      <div className="page page-sections grid12 min-h-dvh content-start">
+        <h1 className="col-span-full t-h2 mt-100" style={{ color: "var(--dh-what)" }}>Profile</h1>
 
         <p className="col-span-full mt-20 max-w-[817px] t-h3">{LEAD}</p>
 
@@ -68,18 +85,33 @@ export default function AboutPage() {
           {HOW_I_WORK.map((p, i) => <p key={i} className="t-body">{p}</p>)}
         </div>
 
-        <h2 className="col-span-full t-h2 mt-100">Skills</h2>
+        <h2 className="col-span-full t-h2 mt-100" style={{ color: "var(--dh-can)" }}>Skills</h2>
 
-        {/* Raster links, Schluss rechts — gleiche Rasterzeile, deshalb unten bündig */}
+        {/* Raster links und rechts, beide oben bündig */}
         <div className="col-half-a mt-15 space-y-50">
           {SKILLS_LINKS.map((g) => <SkillGruppe key={g.h} {...g} />)}
         </div>
         <div className="col-half-b mt-15 space-y-50">
           {SKILLS_RECHTS.map((g) => <SkillGruppe key={g.h} {...g} />)}
         </div>
-        <div className="col-rail mt-15 flex flex-col items-start justify-end">
+
+        <h2 className="col-span-full t-h2 mt-100" style={{ color: "var(--dh-i)" }}>Approach</h2>
+
+        <div className="col-main mt-50 space-y-20">
+          {APPROACH_GROSS.map((z, i) => <p key={i} className="t-h3">{z}</p>)}
+        </div>
+
+        {/* Der kleinere Text und die Schlussfrage stehen in derselben Rasterzeile */}
+        <div className="col-main mt-100 max-w-[610px] space-y-20">
+          {APPROACH_KLEIN.map((z, i) => (
+            <p key={i} className="t-body" style={{ opacity: "var(--dh-soft-dim)" }}>{z}</p>
+          ))}
+        </div>
+        {/* `justify-end` drückt den Block ans untere Ende der Rasterzeile, damit er
+            mit dem Approach-Text abschließt statt oben neben ihm zu beginnen. */}
+        <div className="col-rail mt-100 flex flex-col items-start justify-end">
           <ClosingQuestion />
-          <a href={`mailto:${EMAIL}`} className="btn-outline mt-50 px-50 py-15 t-p2">Reach out</a>
+          <a href={`mailto:${EMAIL}`} className="btn-outline mt-50 px-50 py-10 t-h3">Reach out</a>
         </div>
 
         <Footer />

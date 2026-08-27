@@ -20,7 +20,7 @@ import CrumbMenu from "./CrumbMenu";
  */
 export default function SiteHeader({ crumb, crumbSlug }: { crumb?: string; crumbSlug?: string } = {}) {
   return (
-    <header className={`site-header sticky top-0 z-30 h-[72px]${crumb ? " has-crumb" : ""}`}>
+    <header className={`site-header sticky top-0 z-30${crumb ? " has-crumb" : ""}`}>
       <div className="page flex h-full items-center justify-between">
         <span className="flex items-center">
           {crumb ? (

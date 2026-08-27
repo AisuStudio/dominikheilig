@@ -3,7 +3,8 @@ import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import ProjectViews from "@/components/ProjectViews";
 import ClosingQuestion from "@/components/ClosingQuestion";
-import { DIRECTIONS, EMAIL, PROJECTS } from "@/lib/content";
+import ProjectAxes from "@/components/ProjectAxes";
+import { EMAIL, PROJECTS } from "@/lib/content";
 
 /**
  * Projektseite nach Figma „Project Page / Case" (53:187).
@@ -32,23 +33,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <SiteHeader crumb={project.title} crumbSlug={project.slug} />
-      <div className="page grid12 min-h-dvh content-start">
-        <ProjectViews views={project.views} shots={project.shots} visit={project.visit} titel={project.title} />
+      <div className="page page-sections min-h-dvh">
+        {/* Eigener Rasterkasten, damit der Bildteil auf dem Telefon kleben kann:
+            als Rasterzelle wäre sein Behälter nur eine Zeile hoch und `sticky`
+            hätte keinen Weg. Die Spalten stimmen, weil beide Kästen dasselbe
+            12er-Raster über dieselbe Breite legen. */}
+        <div className="project-top grid12">
+          <ProjectViews views={project.views} shots={project.shots} visit={project.visit} titel={project.title} />
+        </div>
 
+        <div className="grid12 content-start">
         {/* Titel und Vorspann, „Built with" daneben */}
         <div className="col-main mt-100">
           <h1 className="t-h2">{project.title}</h1>
-          <div className="meta-row mt-10 t-eyebrow">
-            <span>{project.maturity}</span>
-            {/* In der Reihenfolge von DIRECTIONS, damit die Farbfolge auf allen
-                Seiten dieselbe ist — nicht in der Reihenfolge der Projektdaten. */}
-            <ul>
-              {DIRECTIONS.filter((d) => project.directions.includes(d.slug)).map((d) => (
-                <li key={d.slug} style={{ color: d.color }}>{d.label}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="mt-10 max-w-[817px] space-y-20">
+          <ProjectAxes project={project} className="axes-page mt-20 t-eyebrow" />
+          <div className="mt-20 max-w-[817px] space-y-20">
             {project.lead.split("\n\n").map((absatz, i) => (
               <p key={i} className="t-h3">{absatz}</p>
             ))}
@@ -61,6 +60,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <li key={t}>{t}</li>
             ))}
           </ul>
+
+          {project.timeSpent ? (
+            <>
+              <h2 className="mt-50 t-h3">Time spent</h2>
+              <p className="mt-15 t-code">{project.timeSpent}</p>
+            </>
+          ) : null}
         </div>
 
         {/* Beschriftete Abschnitte */}
@@ -77,7 +83,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
-        <Footer />
+          <Footer />
+        </div>
       </div>
     </>
   );

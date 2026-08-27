@@ -5,12 +5,11 @@ export type Direction = "building" | "management" | "design";
 
 /** Feste Liste wie in palette — kein Freitext, damit die Zeile vergleichbar bleibt. */
 export type Maturity =
-  | "Mature Prototype"
-  | "Beta"
-  | "Working Prototype"
-  | "Delivered"
+  | "Exploration"
   | "Early Stage"
-  | "Experiment";
+  | "Ongoing"
+  | "Mature Prototype"
+  | "Delivered";
 
 /** Die drei Richtungen. Farben wie im Hero: What → Gold, Can → Mint, I → Violett. */
 export const DIRECTIONS: { slug: Direction; label: string; short: string; color: string; tint: string }[] = [
@@ -35,6 +34,13 @@ export type Project = {
   /** In welcher Welt das Projekt spielt — die What-Achse. Steht als Marke im
       Listeneintrag und speist die Filterknöpfe der Startseite. */
   industry?: string;
+  /** Wie viele der fünf Punkte gefüllt sind. Steht je Projekt und wird NICHT
+      aus `maturity` abgeleitet: zwei Projekte im selben Zustand können
+      verschieden weit sein. */
+  points: number;
+  /** Was das Projekt gekostet hat — „Full Time Employment", „2 Days" … Steht
+      auf der Projektseite unter „Built with". Darf fehlen. */
+  timeSpent?: string;
   directions: Direction[];
   lead: string;          // Vorspann der Projektseite
   views: string[];       // Umschalter über dem Screenshot
@@ -55,8 +61,10 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Handwriting font editor, free to use",
     maturity: "Mature Prototype",
+    points: 3,
     industry: "Type design",
-    directions: ["building", "design"],
+    timeSpent: "38 Days",
+        directions: ["building", "management", "design"],
     lead:
       "A free browser-based handwriting-only font editor with an open marketplace. Just draw your glyphs, ligatures, contextual alternates, or any other necessary symbols.\n\n" +
       "Fontane.Studio builds a real OTF font file. With its own .fff project file — a Fontane Font File — you can switch between a tablet and a PC. All without having to make an account.\n\n" +
@@ -118,8 +126,10 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Seven tools over one set of projects",
     maturity: "Mature Prototype",
+    points: 3,
     industry: "Productivity",
-    directions: ["building", "management"],
+    timeSpent: "34 Days",
+        directions: ["building", "management", "design"],
     lead:
       "CNSL, short for Console, was a pocket console idea I had back in 2006 — when Windows Mobile on my HTC was too cumbersome to feed the device with ideas and thoughts.\n\n" +
       "After my favourite time-tracking app discontinued its services I started building my own, and added features as I needed them.\n\n" +
@@ -184,6 +194,8 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2023",
     mini: "Booking flow, claims and the partner app",
     maturity: "Delivered",
+    points: 5,
+    timeSpent: "Full Time Employment",
     industry: "Moving & logistics",
     directions: ["management", "design"],
     lead:
@@ -235,10 +247,12 @@ const ALLE_PROJEKTE: Project[] = [
     slug: "fire-on-the-land",
     title: "Fire on the Land",
     year: "2026",
-    mini: "Project site: comic, font and a burn-recovery tool",
-    maturity: "Delivered",
+    mini: "Project site: graphic novel, font and a burn-recovery tool",
+    maturity: "Early Stage",
+    points: 2,
     industry: "Climate & forestry",
-    directions: ["building", "design"],
+    timeSpent: "8 Days",
+        directions: ["building", "management", "design"],
     lead:
       "The site for a scientific graphic novel about rebuilding a research tower at Scotty Creek Research Station, Canada’s first Indigenous-led research station, burnt down in a huge wildfire in late 2022.",
     views: ["Graphic Novel", "AS Dehcho", "Adoption Scenarios"],
@@ -283,8 +297,10 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2026",
     mini: "Lean savings on a construction budget",
     maturity: "Delivered",
+    points: 5,
     industry: "Construction",
-    directions: ["building", "design"],
+    timeSpent: "2 Days",
+        directions: ["building", "management", "design"],
     lead:
       "A widget for the construction consultancy Meile + Stein that makes the lean saving potential of a construction project visible. It embeds into their site with one script tag and a custom element.",
     views: ["Simple mode", "Pro mode", "Method & sources"],
@@ -321,9 +337,11 @@ const ALLE_PROJEKTE: Project[] = [
     title: "NORMANN",
     year: "2026",
     mini: "Public award procedure, documented as you go",
-    maturity: "Working Prototype",
+    maturity: "Exploration",
+    points: 1,
     industry: "Construction",
-    directions: ["management", "building"],
+    timeSpent: "1 Day",
+    directions: ["building", "management", "design"],
     lead:
       "A rule set for German public procurement below the EU thresholds, for Berlin and Brandenburg. Six steps pick the award procedure and write the file note while the decisions are being made. The subject comes out of an exchange with the consultancy Meile + Stein that has been running since 2025 — the same thread as the Lean Calculator and the procurement ladder in FullerHome. Work in progress: a running piece of research, not an official service and not legal advice.",
     views: ["Vorhaben", "Vorgang", "Werte", "Angaben prüfen", "Ergebnis", "Vermerk"],
@@ -400,10 +418,12 @@ const ALLE_PROJEKTE: Project[] = [
     slug: "fullerhome",
     title: "FullerHome",
     year: "2026",
-    mini: "A robot builds a timber shell on site",
-    maturity: "Early Stage",
+    mini: "Animated and calculated construction simulation",
+    maturity: "Mature Prototype",
+    points: 3,
     industry: "Construction",
-    directions: ["building", "design"],
+    timeSpent: "5 Days",
+        directions: ["building", "management", "design"],
     lead:
       "A browser simulation of a robot building a self-supporting timber plate shell directly on site. Instead of factory prefabrication, raw plates are delivered, milled on the spot and assembled plate by plate: the construction site becomes the factory.",
     views: ["Vehicle Shelter", "Tourism Office", "Library", "Robot & stations", "Procurement"],
@@ -448,6 +468,8 @@ const ALLE_PROJEKTE: Project[] = [
     year: "2020",
     mini: "Marketing analytics for Shopify shops",
     maturity: "Delivered",
+    points: 5,
+    timeSpent: "Full Time Employment",
     industry: "E-commerce / SaaS",
     directions: ["management", "design"],
     lead:
@@ -482,10 +504,12 @@ const ALLE_PROJEKTE: Project[] = [
     slug: "aisulab",
     title: "AisuLab",
     year: "2026",
-    mini: "Coding exercises for a ten-year-old",
-    maturity: "Early Stage",
+    mini: "IT-Literacy exercises for kids",
+    maturity: "Ongoing",
+    points: 3,
     industry: "Education",
-    directions: ["building", "design"],
+    timeSpent: "11 Days",
+    directions: ["building", "management", "design"],
     lead:
       "Exercises that teach a ten-year-old to program, read data and think about privacy — starting from the game he already plays. Built together with my son, who is also the first tester.",
     views: ["Exercises", "Toolbox", "Media"],
@@ -518,10 +542,12 @@ const ALLE_PROJEKTE: Project[] = [
     slug: "waitingroom",
     title: "waitingroom",
     year: "2026",
-    mini: "Where component behaviour is written down",
-    maturity: "Working Prototype",
+    mini: "Complex component behaviour handover concept",
+    maturity: "Exploration",
+    points: 1,
     industry: "Design systems",
-    directions: ["design", "building"],
+    timeSpent: "1 Day",
+        directions: ["building", "management", "design"],
     lead:
       "A holding room for behaviour rules — the step between a specification and a built component. It fills the gap between Figma and implementation, where the behaviour of a component is decided and currently written down nowhere.",
     views: ["Component", "Rules", "Code", "Workflow"],
@@ -556,10 +582,12 @@ const ALLE_PROJEKTE: Project[] = [
     slug: "witty",
     title: "witty",
     year: "2026",
-    mini: "Names the PM methods you already practice",
-    maturity: "Working Prototype",
-    industry: "Product management",
-    directions: ["management"],
+    mini: "My product management flow dashboard",
+    maturity: "Early Stage",
+    points: 1,
+    industry: "Consulting",
+    timeSpent: "7 Days",
+        directions: ["building", "management", "design"],
     lead:
       "A product-management awareness tool: a fixed base of fourteen steps from spark to snapshot, LLM facilitation, and a hindsight audit that shows which methods you already practice — and what they are called.",
     views: ["Audit", "Mirror", "Business Model Canvas", "Glossary"],
@@ -596,8 +624,10 @@ const ALLE_PROJEKTE: Project[] = [
     hidden: true,
     title: "Treatwell",
     year: "2018",
-    mini: "An experience board for both sides",
+    mini: "Experience flow of a beauty booking partner and customer",
     maturity: "Delivered",
+    points: 5,
+    timeSpent: "Full Time Employment",
     industry: "Beauty marketplace",
     directions: ["management", "design"],
     lead:
@@ -620,8 +650,10 @@ const ALLE_PROJEKTE: Project[] = [
     slug: "head-sports",
     title: "HEAD Sports",
     year: "2017",
-    mini: "One family's ski trip, mapped end to end",
+    mini: "Experience flow of a family's ski trip",
     maturity: "Delivered",
+    points: 5,
+    timeSpent: "2 Days",
     industry: "Sporting goods",
     directions: ["management", "design"],
     lead:
@@ -653,8 +685,11 @@ const ALLE_PROJEKTE: Project[] = [
     title: "Spirit Sprint",
     year: "2026",
     mini: "A workshop deck turned into a web flow",
-    maturity: "Early Stage",
-    directions: ["management"],
+    industry: "Consulting",
+    maturity: "Exploration",
+    points: 1,
+    timeSpent: "4 Days",
+        directions: ["building", "management", "design"],
     lead:
       "A strategic ideation workshop framework — Soul, Skills, Strategy, Spirit — turned from a facilitator deck into a self-service flow a team can run without anyone in the room to moderate it.",
     views: ["Overview", "Positioning", "Values Board", "Business Model Canvas"],
@@ -681,10 +716,12 @@ const ALLE_PROJEKTE: Project[] = [
     slug: "waffle",
     title: "waffle",
     year: "2026",
-    mini: "The design tokens every build starts from",
-    maturity: "Delivered",
+    mini: "My living design system most builds start from",
+    maturity: "Ongoing",
+    points: 3,
     industry: "Design systems",
-    directions: ["design"],
+    timeSpent: "8 Days",
+        directions: ["building", "management", "design"],
     lead:
       "The shared design tokens for Aisu.Studio projects — colour including dark mode, spacing, radius, shadow, motion and self-hosted fonts. The base every new build starts from.",
     views: ["Tokens", "Components", "Patterns", "Type roles"],
@@ -719,9 +756,12 @@ const ALLE_PROJEKTE: Project[] = [
     slug: "chillbert",
     title: "chillbert",
     year: "2026",
-    mini: "Image or text as a point cloud in a cube",
-    maturity: "Experiment",
-    directions: ["building"],
+    mini: "RGB to XYZ, a tangible color space",
+    industry: "Art & Technology",
+    maturity: "Exploration",
+    points: 1,
+    timeSpent: "1 Day",
+        directions: ["building", "management"],
     lead:
       "One-dimensional data in a three-dimensional cube. Drop in a picture and its colours take their places, so the cube becomes the image's gamut. Type text instead and every byte gets a place. Either way it comes out as a WebGL point cloud with the reading path lit between the points.",
     views: ["Semantic text", "Pure entropy", "Character mapping", "Encrypted vault"],
@@ -778,14 +818,6 @@ export const DOORS = [
  * „Beta" teilt sich die vierte Stufe mit dem reifen Prototypen, weil es
  * bisher kein Projekt gibt, das den Unterschied ausspielen müsste.
  */
-export const MATURITY_STUFEN: Record<Maturity, number> = {
-  Experiment: 1,
-  "Early Stage": 2,
-  "Working Prototype": 3,
-  "Mature Prototype": 4,
-  Beta: 4,
-  Delivered: 5,
-};
 
 /** Die Branchen in der Reihenfolge, in der sie in der Liste zuerst auftauchen. */
 export const INDUSTRIES: string[] = [

@@ -26,21 +26,15 @@ export default function ProjectList({ limit = 5 }: { limit?: number }) {
       {/* Gefiltert wird nach Branche. Die Knöpfe tragen Gold, weil die Branche im
           Eintrag die „What"-Achse ist — dieselbe Farbe, dieselbe Bedeutung.
           „All" ist die ausgeschaltete Auswahl und steht deshalb vorn. */}
-      <div className="col-span-full mt-100 flex flex-wrap justify-center gap-20">
+      <div className="chips col-span-full mt-100 flex flex-wrap justify-center gap-10">
         {[null, ...INDUSTRIES].map((branche) => {
-          const an = active === branche;
           return (
             <button
               key={branche ?? "alle"}
               type="button"
-              aria-pressed={an}
+              aria-pressed={active === branche}
               onClick={() => { setActive(branche); setExpanded(false); }}
-              className="cursor-pointer rounded-[100px] px-20 py-10 t-tag whitespace-nowrap transition-opacity duration-300"
-              style={{
-                background: "var(--dh-what-20)",
-                color: "var(--dh-what)",
-                opacity: an ? 1 : 0.5,
-              }}
+              className="chip t-tag"
             >
               {branche ?? "All"}
             </button>
