@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DIRECTIONS, PROJECTS, type Direction } from "@/lib/content";
+import { INDUSTRIES, PROJECTS } from "@/lib/content";
 import ProjectListItem from "./ProjectListItem";
 
 /**
@@ -14,31 +14,35 @@ import ProjectListItem from "./ProjectListItem";
  * später mehr Projekte dazukommen.
  */
 export default function ProjectList({ limit = 5 }: { limit?: number }) {
-  const [active, setActive] = useState<Direction | null>(null);
+  const [active, setActive] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
 
-  const filtered = active ? PROJECTS.filter((p) => p.directions.includes(active)) : PROJECTS;
+  const filtered = active ? PROJECTS.filter((p) => p.industry === active) : PROJECTS;
   const shown = expanded ? filtered : filtered.slice(0, limit);
   const rest = filtered.length - limit;
 
   return (
     <>
-      <div className="col-span-full mt-100 flex flex-wrap justify-center gap-20 sm:gap-50">
-        {DIRECTIONS.map((d) => {
-          const on = active === d.slug;
+      {/* Gefiltert wird nach Branche. Die Knöpfe tragen Gold, weil die Branche im
+          Eintrag die „What"-Achse ist — dieselbe Farbe, dieselbe Bedeutung.
+          „All" ist die ausgeschaltete Auswahl und steht deshalb vorn. */}
+      <div className="col-span-full mt-100 flex flex-wrap justify-center gap-20">
+        {[null, ...INDUSTRIES].map((branche) => {
+          const an = active === branche;
           return (
             <button
-              key={d.slug}
+              key={branche ?? "alle"}
               type="button"
-              aria-pressed={on}
-              onClick={() => { setActive(on ? null : d.slug); setExpanded(false); }}
-              className="cursor-pointer rounded-[100px] px-20 py-10 t-p2 whitespace-nowrap transition-colors duration-300"
+              aria-pressed={an}
+              onClick={() => { setActive(branche); setExpanded(false); }}
+              className="cursor-pointer rounded-[100px] px-20 py-10 t-tag whitespace-nowrap transition-opacity duration-300"
               style={{
-                background: on ? d.tint : "var(--dh-bright-20)",
-                color: on ? d.color : "var(--dh-bright)",
+                background: "var(--dh-what-20)",
+                color: "var(--dh-what)",
+                opacity: an ? 1 : 0.5,
               }}
             >
-              {d.label}
+              {branche ?? "All"}
             </button>
           );
         })}
@@ -59,7 +63,7 @@ export default function ProjectList({ limit = 5 }: { limit?: number }) {
             type="button"
             onClick={() => setExpanded((e) => !e)}
             aria-expanded={expanded}
-            className="btn-outline cursor-pointer px-50 py-15 t-p2"
+            className="btn-outline cursor-pointer px-50 py-10 t-h3"
           >
             {expanded ? "Show Less" : `Show All ${filtered.length} Projects`}
           </button>

@@ -32,10 +32,8 @@ export type Project = {
   year: string;          // TODO Dom: Jahreszahlen prüfen, alles auf 2026 gesetzt
   mini: string;          // zwei Zeilen neben dem Titel, ca. 44 Zeichen
   maturity: Maturity;
-  /** In welcher Welt das Projekt spielt. Steht zurzeit NIRGENDS auf der Seite —
-      in der Liste machte die Zeile den Eintrag zu voll, und auf der Projektseite
-      ist sie vorerst wieder raus. Die Werte bleiben als Material stehen, falls
-      die Angabe in die Mini-Beschreibungen wandert. */
+  /** In welcher Welt das Projekt spielt — die What-Achse. Steht als Marke im
+      Listeneintrag und speist die Filterknöpfe der Startseite. */
   industry?: string;
   directions: Direction[];
   lead: string;          // Vorspann der Projektseite
@@ -761,14 +759,38 @@ const ALLE_PROJEKTE: Project[] = [
 export const PROJECTS: Project[] = ALLE_PROJEKTE.filter((p) => !p.hidden);
 
 // Die drei Türen im Hero.
+/**
+ * Die drei Wörter des Hero-Satzes. Seit dem Umbau am 2026-08-27 sind es keine
+ * Türen mehr — `href`, `label` und `note` sind mit der Berührung weggefallen.
+ * Geblieben ist die Zuordnung Wort → Farbe, und die trägt jetzt die ganze
+ * Seite: dieselben drei Farben stehen an den Rollen der Listeneinträge und in
+ * der Schlussfrage.
+ */
 export const DOORS = [
-  { id: "work",   word: "What", label: "Work",   color: "var(--dh-what)", tint: "var(--dh-what-20)", href: "#work",
-    note: "PLATZHALTER Work — hier steht später, was für eine Art Arbeit das ist." },
-  { id: "skills", word: "can",  label: "Skills", color: "var(--dh-can)",  tint: "var(--dh-can-20)",  href: "#skills",
-    note: "PLATZHALTER Skills — hier stehen später die Methoden." },
-  { id: "about",  word: "I",    label: "About",  color: "var(--dh-i)",    tint: "var(--dh-i-20)",    href: "/profile",
-    note: "PLATZHALTER About — hier steht später der Verweis aufs Profil." },
+  { id: "work",   word: "What", color: "var(--dh-what)", tint10: "var(--dh-what-10)" },
+  { id: "skills", word: "can",  color: "var(--dh-can)",  tint10: "var(--dh-can-10)" },
+  { id: "about",  word: "I",    color: "var(--dh-i)",    tint10: "var(--dh-i-10)" },
 ] as const;
+
+/**
+ * Fünf Stufen für die Punktreihe im Listeneintrag. Die fünf Werte, die
+ * tatsächlich vorkommen, liegen eins zu eins auf den fünf Punkten;
+ * „Beta" teilt sich die vierte Stufe mit dem reifen Prototypen, weil es
+ * bisher kein Projekt gibt, das den Unterschied ausspielen müsste.
+ */
+export const MATURITY_STUFEN: Record<Maturity, number> = {
+  Experiment: 1,
+  "Early Stage": 2,
+  "Working Prototype": 3,
+  "Mature Prototype": 4,
+  Beta: 4,
+  Delivered: 5,
+};
+
+/** Die Branchen in der Reihenfolge, in der sie in der Liste zuerst auftauchen. */
+export const INDUSTRIES: string[] = [
+  ...new Set(PROJECTS.map((p) => p.industry).filter((i): i is string => Boolean(i))),
+];
 
 export const EMAIL = "hi@dominikheilig.com";
 

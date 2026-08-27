@@ -43,10 +43,15 @@
   --dh-can-20: #5af5bf33;
   --dh-i-20: #a892ff33;
   --dh-bright-20: #dedede33;
+  /* 10-Prozent-Fassungen: der Hero trägt seine Kästen jetzt im Ruhezustand,
+     dafür ist 20 % zu laut. Die 20er bleiben für die Filterknöpfe. */
+  --dh-what-10: #ffd7671a;
+  --dh-can-10: #5af5bf1a;
+  --dh-i-10: #a892ff1a;
 
   /* Titelgrößen als Variablen — die Eyebrow und der Jahres-Vorsprung hängen daran */
   --hero-title: clamp(46px, 8.75vw, 112px);
-  --list-title: clamp(38px, 5vw, 64px);
+  --list-title: clamp(30px, 5vw, 64px);  /* Telefon 30 = DH/Mob/H3 */
   --title-2: clamp(38px, 5vw, 64px);      /* DH/H2 — eigener Regler, auch wenn er heute gleich steht */
   --title-3: clamp(22px, 2.5vw, 32px);    /* DH/H3 — die Klappe rechnet ihren Abstand daraus */
 
@@ -76,6 +81,7 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 .t-p2s    { font-size: 20px; line-height: 1.2; font-weight: 600; }                                     /* DH/P2 Strong SemiBold 20    */
 .t-code   { font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 18px; line-height: 1.35; } /* DH/Code 1 */
 .t-listtitle { font-size: var(--list-title); line-height: 1.297; font-weight: 400; }      /* Listeneintrag 64/AUTO */
+.t-tag    { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; line-height: 1.3; }  /* Marken im Listeneintrag */
 .t-eyebrow{ font-size: 12px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; line-height: 1.297; } /* DH/Eyebrow */
 
 /* „Built with" als Aufzählung: das · war ohnehin das Trennzeichen, jetzt ist es die
@@ -156,18 +162,16 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
    Grundlinie. Hält bei jeder Titelgröße, weil der Kasten mitwächst. */
 .hero-eyebrow { top: -20.5px; }
 
-/* Die drei Türwörter tragen in Ruhe DH/Title Underlined — Dicke 1,5 %, Abstand 10 %,
-   beides prozentual zur Schriftgröße, wie in Figma. Beim Berühren wechselt das Bauteil
-   auf DH/Title ohne Strich; hier blendet die Linie über die Farbe aus, damit sie nicht
-   springt und die Zeile ihre Höhe behält. */
+/* Die drei Wörter tragen ihren Kasten jetzt dauerhaft — 10 % der Türfarbe,
+   Radius DH/SM-Round — und das Wort selbst die volle Farbe. Der Unterstrich
+   ist weg, weil er ein Hinweis auf einen Link war und es keinen mehr gibt:
+   die Berührungszustände sind raus, sie ergaben auf dem Telefon keinen Sinn.
+   Das senkrechte Polster liegt bewusst außerhalb der Zeilenschachtel, damit
+   der Kasten das Wort umschließt, ohne die Zeilen auseinanderzuschieben. */
 .hero-word {
-  text-decoration-line: underline;
-  text-decoration-thickness: 1.5%;
-  text-underline-offset: 10%;
-  text-decoration-color: currentColor;
-  transition: background-color .3s ease-out, color .3s ease-out, text-decoration-color .3s ease-out;
+  padding: 0.045em 0.1em;
+  border-radius: var(--dh-round-sm);
 }
-.hero-word[data-active="true"] { text-decoration-color: transparent; }
 
 /* ---- Info Notes im Hero ---------------------------------------------
    Sitzen mittig unter ihrem Wort, oben bündig an der Unterkante des Highlights.
@@ -236,26 +240,48 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
    ihre Farbe. Dadurch trägt die Liste in Ruhe nur Jahr, Titel und Beschreibung. */
 .project-item .item-meta { opacity: .5; transition: opacity .3s ease-out; }
 .project-item:is(:hover, :focus-visible) .item-meta { opacity: 1; }
-.project-item .tag { transition: color .3s ease-out; }
-.project-item:is(:hover, :focus-visible) .tag-building   { color: var(--dh-what); }
-.project-item:is(:hover, :focus-visible) .tag-management { color: var(--dh-can); }
-.project-item:is(:hover, :focus-visible) .tag-design     { color: var(--dh-i); }
+/* Die Rollen tragen ihre Farbe im Ruhezustand mit — gedimmt über die
+   Metazeile, nicht entfärbt. Vorher waren sie grau und wurden erst beim
+   Berühren bunt; jetzt sagt die Liste ihre Zuordnung sofort. */
+.tag-building   { color: var(--dh-what); }
+.tag-management { color: var(--dh-can); }
+.tag-design     { color: var(--dh-i); }
 
-/* Zwei Spalten über beide Zeilen: links Titel und Reifegrad, rechts Mini-Beschreibung
-   und die Richtungsmarken. Dadurch fluchten Zeile 1 und Zeile 2 miteinander, egal wie
-   lang der Titel ist. Keine Zeilenlücke — die Zeilenschachtel des Titels ist der Abstand. */
-.item-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 15px; }
-@media (max-width: 700px) { .item-grid { grid-template-columns: minmax(0, 1fr); } }
+/* Reifegrad als Punktreihe: fünf Stufen, gefüllte in Mint, offene bei 20 %.
+   10 × 5 px, Radius 60 — aus dem Entwurf übernommen. */
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots > span { width: 10px; height: 5px; border-radius: 60px; background: var(--dh-can); }
+.dots > span[data-an="false"] { opacity: .2; }
 
-/* Jahr rechtsbündig in 53 px, Versalie auf Höhe der Titelversalie */
-.list-year { width: 53px; text-align: right; }
+/* Listeneintrag. Desktop: Titel und Achsenblock nebeneinander, Beschreibung
+   über beide Spalten darunter — der Block hängt am Titel, nicht in einer
+   Rasterspalte mit ihm, also darf er breiter sein als ein kurzer Titel, ohne
+   irgendetwas zu verschieben. */
+.item-card  { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 10px; }
+.item-title { grid-column: 1; grid-row: 1; }
+.item-axes  { grid-column: 2; grid-row: 1; display: grid; row-gap: 5px; justify-items: start; }
+.item-mini  { grid-column: 1 / -1; grid-row: 2; }
 
-/* Mini-Beschreibung unten bündig: Grundlinie ihrer letzten Zeile auf der Grundlinie
-   des Titels. Von der Zeilenunterkante bis zur Grundlinie sind es 0,297 · Größe —
-   für den Titel also 0,297·Größe, für die 20-px-Beschreibung 6,43 px (gemessen).
-   Zeilenabstand steht hier, weil .t-p2 außerhalb von @layer liegt. */
-.mini-desc { line-height: 1.297; align-self: end; padding-bottom: calc(var(--list-title) * 0.297 - 6.43px); }
-@media (max-width: 700px) { .mini-desc { padding-bottom: 0; align-self: start; } }
+/* Reifegrad als Punktreihe: fünf Stufen, offene bei 20 %. 10 × 5 px, Radius 60. */
+.dots { display: inline-flex; gap: 5px; align-items: center; }
+.dots > span { width: 10px; height: 5px; border-radius: 60px; background: currentColor; }
+.dots > span[data-an="false"] { opacity: .2; }
+
+/* Telefon: eine Spalte, und die Achsen sortieren sich um den Titel herum.
+   `display: contents` löst den Achsenblock auf, damit `order` auf die drei
+   Marken durchgreift — so steht im Markup nur eine Reihenfolge. Die Rollen
+   fallen weg (Bauteil `Group 61`). Schriftgrößen nach DH/Mob/*. */
+@media (max-width: 700px) {
+  /* align-items bleibt sonst auf `center` aus der Desktop-Regel stehen — in
+     der Spalte ist das die Waagerechte, und alles rückte in die Mitte. */
+  .item-card  { display: flex; flex-direction: column; align-items: flex-start; }
+  .item-axes  { display: contents; }
+  .axis-what  { order: 1; }
+  .item-title { order: 2; line-height: 1; }
+  .item-mini  { order: 3; font-size: 15px; line-height: 25.94px; }
+  .axis-i     { order: 4; }
+  .axis-can   { display: none; }
+}
 
 .rule { height: var(--dh-thin); background: currentColor; opacity: .35; }
 
