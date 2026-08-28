@@ -340,20 +340,22 @@ const ALLE_PROJEKTE: Project[] = [
     maturity: "Exploration",
     points: 1,
     industry: "Construction",
-    timeSpent: "1 Day",
+    timeSpent: "3 Days",
     directions: ["building", "management", "design"],
     lead:
-      "A rule set for German public procurement below the EU thresholds, for Berlin and Brandenburg. Six steps pick the award procedure and write the file note while the decisions are being made. The subject comes out of an exchange with the consultancy Meile + Stein that has been running since 2025 — the same thread as the Lean Calculator and the procurement ladder in FullerHome. Work in progress: a running piece of research, not an official service and not legal advice.",
-    views: ["Vorhaben", "Vorgang", "Werte", "Angaben prüfen", "Ergebnis", "Vermerk"],
+      "A rule set for German public procurement below the EU thresholds, for Berlin and Brandenburg. A project holds thirty to fifty awards, and the money from the cost estimate has to be spread across them. That is where the rule reads along: every amount is checked against the verified rule base as it is typed, with its source and the date that source carries.\n\n" +
+      "Split a contract into lots and the provision that limits it appears at the moment of the split — not as a block, as a citation. What the split buys is nameable: 1,180,000 € divided into 767,000 and 413,000 additionally permits a freihändige Vergabe, which the special rule for social infrastructure does not grant.\n\n" +
+      "The subject comes out of an exchange with the consultancy Meile + Stein that has been running since 2025 — the same thread as the Lean Calculator and the procurement ladder in FullerHome. Work in progress: a running piece of research, not an official service and not legal advice.",
+    views: ["Start", "Vergabeplan", "Lose", "Rückmeldung", "Protokoll", "Vermerk"],
     shots: [
-      "/work/normann/vorhaben.jpg",
-      "/work/normann/vorgang.jpg",
-      "/work/normann/werte.jpg",
-      "/work/normann/pruefen.jpg",
-      "/work/normann/ergebnis.jpg",
+      "/work/normann/start.jpg",
+      "/work/normann/plan.jpg",
+      "/work/normann/lose.jpg",
+      "/work/normann/rueckmeldung.jpg",
+      "/work/normann/protokoll.jpg",
       "/work/normann/vermerk.jpg",
     ],
-    tech: "Static HTML, CSS and JavaScript, no build step · no dependencies, nothing stored or transmitted · self-hosted fonts (Urbanist, Rubik) · 43 rule tests in Node",
+    tech: "Static HTML, CSS and JavaScript, no build step · no dependencies, nothing stored or transmitted · self-hosted Urbanist (OFL) · event log as JSON Lines, state is always a projection · 43 rule tests in Node",
     sections: [
       {
         label: "The finding",
@@ -365,40 +367,51 @@ const ALLE_PROJEKTE: Project[] = [
       {
         label: "How it works",
         body: [
-          "Six steps: the project, the kind of contract, the values, a check of the entries, the result, the file note. Estimating the value, picking the procedure and splitting into lots are exactly the decisions the note has to justify, so the note is written as they happen rather than reconstructed afterwards.",
-          "The protocol is append-only. A changed entry does not overwrite anything, it produces a correction — which is what the law requires anyway.",
+          "A project holds many awards. The framework — who is contracting, what kind of building, whether funding is involved — is entered once, not once per award. Then the budget from the cost estimate is spread across the awards, and each amount is read against the rule base while it is being typed.",
+          "For a single award there is the six-step path: the project, the kind of contract, the values, a check of the entries, the result, the file note. Estimating the value, picking the procedure and splitting into lots are exactly the decisions the note has to justify, so the note is written as they happen rather than reconstructed afterwards.",
+          "Nothing is stored as a state. What is kept is the sequence of events, one line each, and the state shown is always derived from it. A changed entry does not overwrite anything — it produces a correction, which is what the law requires anyway. Every line carries who wrote it, so a second party can later write into the same record without anyone having to guess afterwards which entry was whose.",
         ],
       },
       {
         label: "Hardest call",
         body: [
           "Never say \u201cyou may\u201d. The tool reproduces the rule with its source; it does not apply it to the case, weigh discretion or recommend one of two permitted routes. That is the line to legal services, and it is the reason the thing can exist at all.",
+          "The line got sharper, not looser, when the primary user turned out to be the planning office rather than the awarding authority: the office prepares, it does not decide. So the tool cannot tell it what is allowed — only what the provision says.",
           "The whole area above the EU thresholds is deliberately out of scope — there are tools and law firms for that. The one exception is planning services, where the tool detects that the threshold is crossed, because adding the lots together leads exactly there.",
         ],
       },
       {
         label: "What keeps it honest",
         body: [
-          "Every statement carries its source, its date and its verification status. Rules without a verified primary source are not dropped, they are marked: the EU thresholds are flagged as unverified and shown that way in the result.",
+          "Every statement carries its source, its date and its verification status. Rules without a verified primary source are not dropped, they are marked: the EU thresholds are flagged as unverified, shown that way in the result, and named as a known gap on the front page.",
           "Every rule that produces a statement has a test case — 43 checks, run without a build step.",
         ],
         rail: {
-          label: "Covered today",
+          label: "In numbers",
           lines: [
-            "Brandenburg municipality",
-            "— works and planning",
-            "Land Berlin — planning",
-            "Land Brandenburg — open",
-            "",
+            "35 rule books read",
+            "4 sources verified",
+            "2 marked unverified",
             "43 rule tests",
+            "",
+            "2,490 lines",
+            "0 dependencies",
             "rule base 2025-06-19",
           ],
         },
       },
       {
+        label: "Two ends of one handover",
+        body: [
+          "The planning office fills the plan; the awarding authority checks it. Today those are two houses and two weeks — and that waiting is the part of the procedure that actually hurts.",
+          "So both write into the same record. A comment hangs on a decision, not on a row, and it stays visible when the decision underneath it is later changed: the thread then says what it referred to and what the figure is now. Which of the two is the right anchor is exactly the question the next conversation with the partner will answer.",
+        ],
+      },
+      {
         label: "Why there is no login",
         body: [
           "No account, no storage, no transmission, no installation. Those are the four properties that trigger an IT approval inside a public authority. Without them it is not an application but a reference work, and nobody has to ask permission to use one.",
+          "That argument is about to cost something: a plan with forty awards over several months cannot live in a browser tab. The answer is a file that belongs to the office — one line per event, readable without the tool, and the same file that carries the note to the authority.",
           "The exit is paper: the flow ends with printing. The printout goes into the file and gets signed. From there the paper counts, not the log.",
         ],
       },
@@ -413,7 +426,6 @@ const ALLE_PROJEKTE: Project[] = [
     visit: "https://aisustudio.github.io/Normann/",
     readMore: "https://github.com/AisuStudio/Normann",
   },
-
   {
     slug: "fullerhome",
     title: "FullerHome",
