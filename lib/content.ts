@@ -78,7 +78,7 @@ const ALLE_PROJEKTE: Project[] = [
       "/work/fontane/specimen.jpg",
       "/work/fontane/analytics.jpg",
     ],
-    tech: "opentype.js · perfect-freehand · Supabase · UFO & JSON export",
+    tech: "opentype.js · perfect-freehand · Supabase · UFO & JSON export · spoken usability review transcribed with Vibe (open source)",
     sections: [
       {
         label: "The story",
@@ -188,6 +188,92 @@ const ALLE_PROJEKTE: Project[] = [
     visit: "https://cnsl.aisu.studio",
   },
 
+  {
+    slug: "solarkreis",
+    title: "SolarKreis",
+    year: "2026",
+    mini: "Read-only monitoring with a safe write path",
+    maturity: "Early Stage",
+    points: 2,
+    industry: "Energy",
+    timeSpent: "2 Days",
+    directions: ["building", "management", "design"],
+    lead:
+      "A monitoring simulation for three solar fields around one control centre. The fields, the inverters and every reading are simulated. The weather, the power price and the fire detections are real \u2014 Open-Meteo, aWATTar and NASA FIRMS.\n\n" +
+      "It exists to carry one pattern end to end: take a read-only monitoring prototype and give it a safe write path, with devices from several vendor formats unified into one model.\n\n" +
+      "Built in two days, alone, with Claude Code. The interface marks what is real and what is simulated at every point.",
+    views: [
+      "System map",
+      "Field map",
+      "Control room",
+      "Guard and tenancy",
+      "Event log",
+      "Data sources",
+      "Documentation",
+    ],
+    shots: [
+      "/work/solarkreis/intro.jpg",
+      "/work/solarkreis/map.jpg",
+      "/work/solarkreis/control.jpg",
+      "/work/solarkreis/guard.jpg",
+      "/work/solarkreis/log.jpg",
+      "/work/solarkreis/sources.jpg",
+      "/work/solarkreis/docs.jpg",
+    ],
+    tech: "Next.js \u00b7 React 19 \u00b7 TypeScript \u00b7 Event sourcing \u00b7 Open-Meteo \u00b7 aWATTar \u00b7 NASA FIRMS \u00b7 waffle tokens \u00b7 Claude Code",
+    sections: [
+      {
+        label: "How it works",
+        body: [
+          "Three real feeds come in: irradiation and temperature from Open-Meteo, the day-ahead spot price from aWATTar, active fire detections from NASA FIRMS. The power itself is computed rather than faked \u2014 solar geometry, Meinel attenuation for clear-sky irradiance, and an NOCT temperature loss of 0.4 % per Kelvin above 25 \u00b0C. A hot day in July yields less than a cool day in May under the same sun.",
+          "The seven inverters speak three different vendor formats. They are unified at ingest, not in the display: everything behind that point only knows kW and \u00b0C.",
+        ],
+        rail: {
+          label: "In numbers",
+          lines: [
+            "3 fields \u00b7 7 inverters",
+            "3 vendor formats",
+            "38.88 MW grid limit",
+            "39.8 MW at solstice",
+            "20 MWh storage",
+            "",
+            "48 checks against the live instance",
+            "2 days from empty folder",
+          ],
+        },
+      },
+      {
+        label: "The write path",
+        body: [
+          "Every command goes through one guard, and the guard is fail-closed: anything other than authorised does not execute, it falls to the safe state. It checks in the order the reasons weigh \u2014 tenancy, then the state of the plant, then how fresh the data is, then the second hand for critical actions. The first hit decides, so the refusal names the actual reason instead of the one checked last.",
+          "Rejected commands are appended to the log exactly like executed ones. A guard whose refusals disappear cannot be audited. The automatic rule that holds the circle under its grid limit runs through the same guard as a human operator \u2014 and the storage is the first rung of that ladder: fill it before throttling anything.",
+        ],
+      },
+      {
+        label: "Hardest call",
+        body: [
+          "State is a fold over an append-only log. A setpoint is not a field you set, it is the result of every command ever executed. That makes the audit log the state itself rather than a record kept beside it, and a command without an entry cannot exist.",
+          "Readings deliberately stay out of that log. Seven devices at one entry per second would be 25,000 events an hour for no insight. A measurement is only written when it triggered something.",
+        ],
+      },
+      {
+        label: "What I did not build",
+        body: [
+          "Three features were cut, each with the measurement that killed it. The glare alarm was computed in full first \u2014 the reflection vector over a whole year at five-minute resolution \u2014 and came back with zero glare windows, because the motorway there runs at 51\u00b0 and the panel normals miss the glare lobes entirely. The model stays in the repo as the evidence for the refusal.",
+          "The other two: a traffic feed that is free and easy to read but leads to no command, and a multi-day storage fallback that would need a load model the system does not have.",
+        ],
+      },
+      {
+        label: "Process",
+        body: [
+          "Wireframes and a token page in Figma came before the code: nine type sizes, 1,287 fills and lines bound to variables, contrast measured per pair rather than assumed. Every flow line carries an ink casing, because the write colour only reaches 2.65:1 against the page and WCAG asks for 3:1.",
+          "The result is checked rather than claimed. A separate document lists the decisions I made without a wireframe, written so they can be argued with instead of defended.",
+        ],
+      },
+    ],
+    visit: "https://solarkreis.vercel.app",
+    readMore: "https://github.com/AisuStudio/solarkreis",
+  },
   {
     slug: "movinga",
     title: "Movinga",
