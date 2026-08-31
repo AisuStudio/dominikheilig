@@ -71,7 +71,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* Beschriftete Abschnitte */}
         {project.sections.map((s, i) => (
-          <Abschnitt key={s.label} {...s} visit={i === project.sections.length - 1 ? project.visit : undefined} />
+          <Abschnitt
+            key={s.label}
+            {...s}
+            geschlossen={project.closed ?? project.maturity === "Delivered"}
+            visit={i === project.sections.length - 1 ? project.visit : undefined}
+          />
         ))}
 
         {/* Schluss — Linie, Frage, Knopf */}
@@ -92,13 +97,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
 function Abschnitt({
   label,
+  steps,
   body,
   rail,
+  geschlossen,
   visit,
 }: {
   label: string;
+  steps?: string[];
   body: string[];
   rail?: { label: string; lines: string[] };
+  /** Abgeschlossenes Projekt: hinter der letzten Station steht kein Pfeil mehr. */
+  geschlossen?: boolean;
   /** Nur am letzten Abschnitt: der Verweis auf die Seite noch einmal, unten. */
   visit?: string;
 }) {
@@ -106,6 +116,13 @@ function Abschnitt({
     <>
       <p className="section-label t-eyebrow col-label mt-100">{label}</p>
       <div className="col-body mt-100 space-y-10">
+        {steps ? (
+          <ol className={`step-chain t-code${geschlossen ? " step-chain-zu" : ""}`}>
+            {steps.map((schritt) => (
+              <li key={schritt}>{schritt}</li>
+            ))}
+          </ol>
+        ) : null}
         {body.map((absatz, i) => (
           <p key={i} className="t-body">{mitVerweisen(absatz)}</p>
         ))}

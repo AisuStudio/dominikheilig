@@ -471,3 +471,17 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 
 .crumb-chevron { transition: transform .3s ease-out; }
 [aria-expanded="true"] > .crumb-chevron { transform: rotate(180deg); }
+
+/* Ablauf in Stichworten. Wie „Built with" in der Mono, damit die Kette als Schema
+   gelesen wird und nicht als Satz. Der Pfeil steht hinter jedem Schritt, auch hinter
+   dem letzten: die Kette ist offen. Umbricht die Zeile, hängt der Pfeil am Ende der
+   vorigen — dort steht er richtig, weil er weiterweist. */
+/* Eine Stufe über dem Fließtext-Code: DH/P2 = 20 px. Die Kette ist ein Gerüst,
+   kein Beleg — sie darf lauter sein als „Built with". */
+.step-chain { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
+              font-size: 20px; line-height: 1.35; }
+.step-chain > li { display: flex; align-items: baseline; gap: 10px; white-space: nowrap; }
+.step-chain > li::after { content: "\2192"; opacity: 0.45; }
+.step-chain + p { margin-top: 30px; }
+/* Abgeschlossenes Projekt: die Kette endet, statt weiterzuweisen. */
+.step-chain-zu > li:last-child::after { content: none; }
