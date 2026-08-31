@@ -218,6 +218,70 @@ Sekunden, ein vollständiges Lesen von 300 Wörtern dauert eher 90. Er liest nie
 Ein Eintrag darf länger sein, wenn die Substanz es trägt — aber dann bewusst und
 mit Begründung, nicht aus Trägheit beim Kürzen.
 
+## Figma ist die Quelle — der Rückweg
+
+Seit 2026-08-31 wird der Inhalt **in Figma redigiert**, nicht im Code. Die Seite
+`DH 2.0` trägt alle 21 Rahmen (Landing, About, 19 Projekte), `Designsystem` die
+Tokens. Die Seiten mit `OLD ·` davor sind Archiv und werden nicht mehr angefasst.
+
+### Was Dom in Figma ändern darf
+
+**Texte, Farben, Abstände.** Alles andere ist Struktur und gehört besprochen.
+
+- **Ein Absatz = ein Textknoten.** Ein weiterer Absatz entsteht durch Duplizieren
+  eines bestehenden Knotens, nicht durch einen Zeilenumbruch im selben Knoten.
+  In den Leisten (`rail.lines`) und in der Skills-Liste ist die Zeile die Einheit:
+  dort wird jede Zeile ein eigener Eintrag.
+- **Abstände über die Halter**, nicht über Positionen. Die Rahmen `Abstand 50`,
+  `Abstand 100` hängen an `DH/Space Medium` und `DH/Space Big`. Wer den Token
+  ändert, ändert alle Seiten auf einmal.
+- **Farben über die Variablen.** Kein roher Wert, keine Overrides. Was es nicht
+  als Token gibt, gibt es nicht — dann kommt erst ein Token dazu.
+
+### Die Feldnamen
+
+Jeder redigierbare Textknoten heißt nach dem Feld, das er trägt:
+
+    title · industry · maturity · direction.building · views.4 · tech.7 · meta
+    lead.1 · lead.2
+    section.2.label · section.2.body.3 · section.2.steps.4
+    section.2.rail.label · section.2.rail.lines
+    bio · bio.cta
+    about.lead · about.howiwork · about.approach.big · about.skills.3.body
+
+Der **Meta-Block** rechts unter „Built with" trägt, was auf der Seite nicht
+sichtbar ist: `slug`, `year`, `points`, `timeSpent`, `visit`, bei zurückgestellten
+Projekten `hidden`.
+
+### Abziehen und übernehmen
+
+Erst den Abzug holen (`use_figma`, Seite `DH 2.0`):
+
+```js
+const ziel = figma.root.children.find(p => p.name === "DH 2.0");
+await figma.setCurrentPageAsync(ziel);
+const FELD = /^(lead|section|title|industry|maturity|direction|views|tech|meta|bio|about)\b/;
+return { frames: ziel.children.slice().sort((a,b) => a.x - b.x).map(r => {
+  const felder = {};
+  for (const t of r.findAll(n => n.type === "TEXT" && FELD.test(n.name))) felder[t.name] = t.characters;
+  return { name: r.name, felder };
+}) };
+```
+
+Dann vergleichen und übernehmen:
+
+```bash
+python3 .claude/skills/projekttext/scripts/aus-figma.py abzug.json
+python3 .claude/skills/projekttext/scripts/aus-figma.py abzug.json --apply
+```
+
+Ohne `--apply` schreibt das Skript nichts, es zeigt nur die Abweichungen. Danach
+`npx tsc --noEmit` und die Seite auf Port 3100 ansehen.
+
+**Was nicht aus Figma kommt:** die Screenshots unter `public/work/<slug>/`. Die
+Namen der Ansichten stehen in Figma, die Bilder werden aus den echten Apps
+gezogen.
+
 ## Vor dem Abschluss
 
 ```bash

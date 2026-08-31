@@ -86,7 +86,7 @@ const ALLE_PROJEKTE: Project[] = [
       "/work/fontane/specimen.jpg",
       "/work/fontane/analytics.jpg",
     ],
-    tech: "opentype.js · perfect-freehand · Supabase · UFO & JSON export · spoken usability review transcribed with Vibe (open source)",
+    tech: "opentype.js · perfect-freehand · Supabase · Figma · UFO & JSON export · spoken usability review transcribed with Vibe (open source)",
     sections: [
       {
         label: "How it works",
@@ -98,14 +98,15 @@ const ALLE_PROJEKTE: Project[] = [
       {
         label: "Process",
         steps: [
-          "Workshops, no iPads",
-          "Rough editor",
-          "OTF export",
-          "Rebuilt from scratch",
-          "Marketplace",
+          "Workshops",
+          "Idea",
+          "Rough Proof of Concept",
+          "Test & iterate",
+          "First feedback",
+          "Refactor",
         ],
         body: [
-          "A rough first prototype out of a comprehensive vision, then testing, feedback and iteration.",
+          "A rough first prototype out of a comprehensive vision based on the workshop pains, then testing, feedback and iteration.",
           "After a deep review the editor was rebuilt from scratch. The first version made drawing feel like fighting the tool, and no amount of patching was going to fix that.",
         ],
         rail: {
@@ -129,7 +130,8 @@ const ALLE_PROJEKTE: Project[] = [
       {
         label: "Result",
         body: [
-          "Users report bugs and suggest improvements through the app. The last round of feedback changed the editor more than any plan of mine did.",
+          "Adoption is picking up, and people spend more time on the app rather than just looking. The goal is to have the workflows and UX smooth until mid autumn.",
+          "So far users report bugs and suggest improvements through the app. The last round of feedback had a very positive impact on the editor and triggered the landing page.",
         ],
         rail: {
           label: "In numbers",
@@ -1031,17 +1033,28 @@ const ALLE_PROJEKTE: Project[] = [
       "Events",
       "Event detail",
       "Artist portfolio",
-      "Registration",
+      "Application",
       "Chat",
       "Design system",
+    ],
+    shots: [
+      "/work/aaly/landing.jpg",
+      "/work/aaly/alley.jpg",
+      "/work/aaly/events.jpg",
+      "/work/aaly/event.jpg",
+      "/work/aaly/portfolio.jpg",
+      "/work/aaly/application.jpg",
+      "/work/aaly/chat.jpg",
+      "/work/aaly/design-system.jpg",
     ],
     tech: "Pure HTML and CSS · no framework, no build step, no npm · KERN UX v2.6.4 · Public Sans · Lucide icons · one shared stylesheet of ~700 lines · GitHub Pages",
     sections: [
       {
         label: "How it works",
         body: [
-          "Eight screens, all linked and clickable. The space landing carries the membership status, the alley has search and a genre filter, the programme takes bookmarks. A five-step wizard handles the application, and an artist portfolio holds gallery, bio and events.",
-          "There is no backend. The prototype exists to put the complete product experience in front of stakeholders and test users before anything is implemented.",
+          "Eight screens, all linked and clickable. The alley is organised around the table. Your own stand, your neighbours on tables 5 to 9 — and a search that takes a table number as readily as a name.",
+          "A three-step application — personal data, portfolio, what you want to exhibit — ends in a summary and a reference number. The programme takes bookmarks, and an artist page holds gallery, bio and events.",
+          "There is no backend. The prototype exists to put the whole product experience in front of stakeholders and test users before anything is implemented.",
         ],
       },
       {
@@ -1169,27 +1182,3 @@ export const BIO =
     Atemzug lassen beide untergehen. */
 export const BIO_CTA = "Open to freelance work, permanent roles and collaborations.";
 
-/**
- * Die Zahl, die das Etikett überflüssig macht.
- *
- * „AI native" behauptet jeder gerade; was sich nicht behaupten lässt, ist das
- * Verhältnis von Ergebnis zu Zeit. Es steht ohnehin in den Daten — hier wird es
- * nur zusammengerechnet, damit es auf der Startseite sichtbar wird und beim
- * nächsten Projekt von allein stimmt.
- *
- * Gezählt werden die selbst gebauten Projekte mit einer Tagesangabe: nicht die
- * Anstellungen („Full Time Employment"), nicht die zurückgestellten.
- */
-export const BUILD_STATS = (() => {
-  const tage = ALLE_PROJEKTE
-    .filter((p) => !p.hidden && p.directions.includes("building"))
-    .map((p) => Number(/^(\d+) Days?$/.exec(p.timeSpent ?? "")?.[1]))
-    .filter((n) => Number.isFinite(n))
-    .sort((a, b) => a - b);
-  const mitte = Math.floor(tage.length / 2);
-  return {
-    projekte: tage.length,
-    tage: tage.reduce((a, b) => a + b, 0),
-    median: tage.length % 2 ? tage[mitte] : Math.round((tage[mitte - 1] + tage[mitte]) / 2),
-  };
-})();
