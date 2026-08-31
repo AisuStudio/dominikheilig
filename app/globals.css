@@ -485,3 +485,8 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 .step-chain + p { margin-top: 30px; }
 /* Abgeschlossenes Projekt: die Kette endet, statt weiterzuweisen. */
 .step-chain-zu > li:last-child::after { content: none; }
+
+/* Die Zeit steht nur im Listeneintrag. Auf der Projektseite trägt sie die
+   rechte Spalte unter „Time spent" — zweimal wäre sie einmal zu viel. */
+.axes-page .axis-time { display: none; }
+.axis-time { opacity: .7; }

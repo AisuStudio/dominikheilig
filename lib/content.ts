@@ -320,7 +320,7 @@ const ALLE_PROJEKTE: Project[] = [
     maturity: "Delivered",
     points: 5,
     timeSpent: "Full Time Employment",
-    industry: "Moving & logistics",
+    industry: "Logistics",
     directions: ["management", "design"],
     lead:
       "Movinga was a house-move booking platform operating in Germany, France, Sweden, Austria and Switzerland. An average move cost around €1,100.\n\n" +
@@ -362,6 +362,55 @@ const ALLE_PROJEKTE: Project[] = [
         body: [
           "When I started at Movinga, we moved as a family and I booked their service. Movinga helps people arrive in a new chapter of their life — that understanding stayed with me.",
           "It became the foundation of Movinga’s rebranding concept.",
+        ],
+      },
+    ],
+  },
+
+  {
+    slug: "shift",
+    title: "Shift",
+    year: "2023",
+    mini: "Driver app for a UK logistics marketplace",
+    maturity: "Delivered",
+    // TODO Dom: points und timeSpent prüfen — dieselbe Anstellung wie Movinga?
+    points: 5,
+    timeSpent: "Full Time Employment",
+    industry: "Logistics",
+    directions: ["management", "design"],
+    lead:
+      "Shift.online is a UK marketplace for two-person and last-mile delivery. Its Driver.App runs on Android and iOS, built in Flutter and maintained by the engineering team alone, without design.\n\n" +
+      "Shift had acquired Movinga, which is how I came to it — two driver apps side by side, our PWA and this one.",
+    views: ["Driver.App", "Schedule", "Job offer", "Swipe modal", "Date picker", "In Figma"],
+    shots: [
+      "/work/shift/app.png",
+      "/work/shift/schedule.jpg",
+      "/work/shift/job.jpg",
+      "/work/shift/swipe.jpg",
+      "/work/shift/datepicker.jpg",
+      "/work/shift/figma.png",
+    ],
+    tech: "Flutter (Android and iOS) · Figma · driver feedback · component library",
+    sections: [
+      {
+        label: "The situation",
+        body: [
+          "An app that ships continuously without design consultation works for a while, and then it does not. I aggregated the feedback the drivers were already giving and took it to the Flutter team.",
+          "What came back was not a redesign brief. It was contrast, grey tones, legibility and patterns you could tell apart — the things that decide whether a phone is readable in a van.",
+        ],
+      },
+      {
+        label: "What changed",
+        body: [
+          "Fewer containers. The pick-up amber and drop-off blue hold across every screen instead of appearing per component. Modals moved onto an overlay in the brand colour, and the type got bolder.",
+          "The small things surface the same way. A date picker was showing “outubro de 2023” in an English app, and the swipe prompt said “desitnation”. Nobody files a ticket for that; a driver just squints and carries on.",
+        ],
+      },
+      {
+        label: "Result",
+        body: [
+          "The drivers noticed, because looking at the phone is most of the job. The engineering team could build cleaner screens in less time, and the component library got tidied on the way.",
+          "“Sometimes it’s a bunch of small changes that make the work for us and the users easier.” — Felipe, Flutter engineer",
         ],
       },
     ],
@@ -1114,4 +1163,33 @@ export const INDUSTRIES: string[] = [
 export const EMAIL = "hi@dominikheilig.com";
 
 export const BIO =
-  "Dominik is a design-led Product Manager and agentic builder with 15+ years in tech, based in Berlin. Reach out for freelance work, permanent roles and collaborations.";
+  "Dominik is a design-led Product Manager and agentic builder in Berlin, with 15+ years in tech.";
+
+/** Getrennt vom Satz darüber: eine Aussage und eine Aufforderung im selben
+    Atemzug lassen beide untergehen. */
+export const BIO_CTA = "Open to freelance work, permanent roles and collaborations.";
+
+/**
+ * Die Zahl, die das Etikett überflüssig macht.
+ *
+ * „AI native" behauptet jeder gerade; was sich nicht behaupten lässt, ist das
+ * Verhältnis von Ergebnis zu Zeit. Es steht ohnehin in den Daten — hier wird es
+ * nur zusammengerechnet, damit es auf der Startseite sichtbar wird und beim
+ * nächsten Projekt von allein stimmt.
+ *
+ * Gezählt werden die selbst gebauten Projekte mit einer Tagesangabe: nicht die
+ * Anstellungen („Full Time Employment"), nicht die zurückgestellten.
+ */
+export const BUILD_STATS = (() => {
+  const tage = ALLE_PROJEKTE
+    .filter((p) => !p.hidden && p.directions.includes("building"))
+    .map((p) => Number(/^(\d+) Days?$/.exec(p.timeSpent ?? "")?.[1]))
+    .filter((n) => Number.isFinite(n))
+    .sort((a, b) => a - b);
+  const mitte = Math.floor(tage.length / 2);
+  return {
+    projekte: tage.length,
+    tage: tage.reduce((a, b) => a + b, 0),
+    median: tage.length % 2 ? tage[mitte] : Math.round((tage[mitte - 1] + tage[mitte]) / 2),
+  };
+})();

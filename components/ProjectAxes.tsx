@@ -42,6 +42,10 @@ export default function ProjectAxes({ project, className = "" }: { project: Proj
             <span key={i} data-an={i <= project.points} />
           ))}
         </span>
+        {/* Nur in der Liste: „Mature Prototype" allein lässt an Monate denken.
+            Daneben „38 Days" ist das ganze Argument. Auf der Projektseite steht
+            die Zeit schon rechts unter „Time spent" — dort blendet CSS sie aus. */}
+        {project.timeSpent ? <span className="axis-time">{project.timeSpent}</span> : null}
       </span>
     </div>
   );
