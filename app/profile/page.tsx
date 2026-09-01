@@ -14,49 +14,59 @@ export const metadata = { title: "Profile — Dominik Heilig" };
  * sagt damit dreimal dasselbe System, nur an anderer Stelle.
  */
 
-const LEAD =
-  "Design-led product manager. I own products end-to-end and design and prototype them myself, with 15 years in tech across product, design and brand (SaaS, MarTech, marketplaces, logistics, lately construction and real estate).";
+const LEAD = [
+  "I am a design-led Product Manager and agentic builder in Berlin, with 15+ years in tech.",
+  "I own, design, prototype and build products end to end.",
+  "SaaS, MarTech, marketplaces, logistics, lately construction and typography.",
+];
 
 const HOW_I_WORK = [
-  "What I'm good at is deciding what's worth building and making it coherent. Breaking whole ideas into small, buildable steps has been my craft since I started out storyboarding 3D animation, and it's still the core of how I work.",
-  "I prototype quickly with agentic AI to learn fast, then act on what I learn, with security and privacy in from the start.",
+  "Breaking large projects into buildable steps has been part of my work since I started out storyboarding 3D animation.",
+  "I prototype fast with agentic AI to learn, iterate and improve.",
+  "Security and privacy go in from the start.",
+  "I like a team around me. At Movinga, touching the booking flow meant touching every department in the company — that is the kind of problem I find interesting.",
 ];
 
 const SKILLS_LINKS = [
   {
     h: "Product Management",
     b: [
-      "product strategy & vision, roadmapping, prioritization, continuous discovery, backlog ownership,",
-      "user stories & acceptance criteria, lifecycle management, A/B testing, data analysis (Google Analytics), stakeholder",
-      "management, cross-functional leadership, go-to-market",
+      "Product strategy & vision, roadmapping, prioritisation, continuous discovery, backlog ownership, user stories & acceptance criteria, lifecycle management, A/B testing, product analytics, pricing & monetisation, stakeholder management, cross-functional leadership, go-to-market",
     ],
   },
-  { h: "Languages", b: ["German (native)", "English (C1)"] },
+  {
+    h: "Build / AI",
+    b: [
+      "Rapid prototyping and shipping with agentic AI tooling; connecting APIs and normalising their formats",
+      "(Claude Code, Figma, TypeScript, Next.js, Tailwind, Supabase, Vercel, WebGL, ...)",
+    ],
+  },
 ];
 
 const SKILLS_RECHTS = [
-  {
-    h: "Build / AI",
-    b: ["Rapid prototyping and shipping with agentic AI tooling (Claude Code, TypeScript, Next.js, Tailwind, Supabase, Vercel, WebGL)"],
-  },
-  { h: "Design", b: ["Agile, Scrum, Kanban, rapid prototyping, workshop design & facilitation, design sprints"] },
+  { h: "Design", b: ["Design systems, UI/UX, editorial, storyboarding"] },
+  { h: "Methods", b: ["Agile, Scrum, Kanban, rapid prototyping, workshop design & facilitation, design sprints"] },
   { h: "Tools", b: ["Claude Code, Figma, Adobe Suite, Jira, Miro, Google Workspace"] },
+  { h: "Languages", b: ["German (native)", "English (C1)"] },
 ];
 
 /** Der große Block: Titelzeile und vier Sätze, die die These aufmachen. */
 const APPROACH_GROSS = [
   "Prototype Thinking",
-  "These days I build digital things incredibly faster and more versatile than I could have planned.",
-  "Planning a digital product was the recommended order than just building it. It was a lot cheaper.",
-  "From waterfall to agile, we planned as granular as we could (or were allowed to), often prototyped, but built last.",
-  "AI is evolving that equation: a first working version is now often faster to build and share than to plan.",
+  "These days I build digital things faster than I could have planned them.",
+  "Planning a digital product first used to be the recommended order. It was a lot cheaper than building.",
+  "From waterfall to agile, we planned as granular as we could — or were allowed to. We often prototyped, but built last.",
+  "AI changes that equation. A first working version is now often faster to build and share than to plan.",
 ];
 
+/** Die Marke links neben dem kleineren Approach-Text — wie „How I work". */
+const APPROACH_LABEL = "The outlook I see";
+
 const APPROACH_KLEIN = [
-  "Most likely Prototype Thinking is the way of working. At least it's how I work now: start from a (comprehensive) vision, build a proof of concept, an MVP, use it, watch where it breaks.",
-  "Requirements don't go away — knowing what I want is still half the craft — but they change shape: from documents written up front to skills and guardrails written along the way. Design Thinking wanted us to understand before we build; we still do — the understanding just arrives in increments, one working version at a time.",
-  "Apparently in AI-driven companies this is already becoming team practice: skills, plug-ins and guardrails as shared assets, building blocks as a common library, prototypes landing inside existing architecture instead of beside it. This also opens up the window to blend disciplines and enable participation in the process.",
-  "It comes with new breaking points and pitfalls, but I guess this is the new way.",
+  "Most likely Prototype Thinking is the new way of working. At least it is how I work now: start from a vision for context, strip it to the core, build a proof of concept, then an MVP. Test it, watch where it breaks, and turn what breaks into SKILL.md files and guardrails so it does not break twice. Because requirements don't go away.",
+  "Design Thinking wanted us to understand before we build. We still need to. The understanding just arrives in increments. Design sprints were great for aggregating perspectives, but they tied up a lot of team capacity, and a measurable ROI stayed beyond the horizon.",
+  "In AI-driven companies this is already becoming team practice: skills, plug-ins, harnesses and guardrails as shared assets, building blocks as a common library. Prototypes land inside the existing architecture instead of beside it, which can be tricky as LLM semantics are not deterministic, and results vary a lot across models and individuals.",
+  "That also opens a window to blend disciplines, and to let more people take part. Prototype Thinking comes with new breaking points and pitfalls. How it evolves from here is the interesting part — happy to discuss.",
 ];
 
 function SkillGruppe({ h, b }: { h: string; b: string[] }) {
@@ -77,7 +87,10 @@ export default function AboutPage() {
       <div className="page page-sections grid12 min-h-dvh content-start">
         <h1 className="col-span-full t-h2 mt-100" style={{ color: "var(--dh-what)" }}>Profile</h1>
 
-        <p className="col-span-full mt-20 max-w-[817px] t-h3">{LEAD}</p>
+        {/* Drei Zeilen, wie im Figma-Rahmen — je eine Aussage. */}
+        <div className="col-span-full mt-20 max-w-[817px] space-y-10">
+          {LEAD.map((zeile, i) => <p key={i} className="t-h3">{zeile}</p>)}
+        </div>
 
         {/* Beschrifteter Abschnitt — Marke links, Text im Textfeld */}
         <p className="section-label t-eyebrow col-label mt-100">How I work</p>
@@ -101,8 +114,10 @@ export default function AboutPage() {
           {APPROACH_GROSS.map((z, i) => <p key={i} className="t-h3">{z}</p>)}
         </div>
 
-        {/* Der kleinere Text und die Schlussfrage stehen in derselben Rasterzeile */}
-        <div className="col-main mt-100 max-w-[610px] space-y-20">
+        {/* Der kleinere Text und die Schlussfrage stehen in derselben Rasterzeile.
+            Die Marke sitzt zwei Rasterspalten links davon, wie bei „How I work". */}
+        <p className="section-label t-eyebrow col-label mt-100">{APPROACH_LABEL}</p>
+        <div className="col-body mt-100 max-w-[610px] space-y-20">
           {APPROACH_KLEIN.map((z, i) => (
             <p key={i} className="t-body" style={{ opacity: "var(--dh-soft-dim)" }}>{z}</p>
           ))}
