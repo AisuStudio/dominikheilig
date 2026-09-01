@@ -39,12 +39,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             hätte keinen Weg. Die Spalten stimmen, weil beide Kästen dasselbe
             12er-Raster über dieselbe Breite legen. */}
         <div className="project-top grid12">
-          <ProjectViews views={project.views} shots={project.shots} visit={project.visit} titel={project.title} />
+          <ProjectViews views={project.views} shots={project.shots} visit={project.visit} extraLink={project.extraLink} titel={project.title} />
         </div>
 
         <div className="grid12 content-start">
         {/* Titel und Vorspann, „Built with" daneben */}
-        <div className="col-main mt-100">
+        <div className="col-main mt-50">
           <h1 className="t-h2">{project.title}</h1>
           <ProjectAxes project={project} className="axes-page mt-20 t-eyebrow" />
           <div className="mt-20 max-w-[817px] space-y-20">
@@ -53,20 +53,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
         </div>
-        <div className="col-rail mt-100">
+        <div className="col-rail mt-50">
           <h2 className="t-h3">Built with</h2>
-          <ul className="code-list mt-15 t-code">
+          <ul className="code-list mt-15 t-code" style={{ color: "var(--dh-can)" }}>
             {project.tech.split(" · ").map((t) => (
               <li key={t}>{t}</li>
             ))}
           </ul>
-
-          {project.timeSpent ? (
-            <>
-              <h2 className="mt-50 t-h3">Time spent</h2>
-              <p className="mt-15 t-code">{project.timeSpent}</p>
-            </>
-          ) : null}
         </div>
 
         {/* Beschriftete Abschnitte */}
@@ -76,11 +69,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {...s}
             geschlossen={project.closed ?? project.maturity === "Delivered"}
             visit={i === project.sections.length - 1 ? project.visit : undefined}
+            extraLink={i === project.sections.length - 1 ? project.extraLink : undefined}
           />
         ))}
 
         {/* Schluss — Linie, Frage, Knopf */}
-        <div className="col-body mt-100">
+        <div className="col-body mt-50">
           <div className="rule" style={{ background: "#2a2a2a", opacity: 1 }} />
           <div className="mt-50 flex flex-wrap items-end gap-50">
             <ClosingQuestion />
@@ -95,6 +89,15 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   );
 }
 
+/** Die Leiste trägt die Farbe ihrer Art: Zahlen violett, Ausblick gold.
+    Unbekannte Überschriften bleiben absichtlich hell — dann fällt auf, dass
+    hier eine neue Art dazugekommen ist. */
+function leistenTon(label: string) {
+  if (label === "In numbers") return "rail-zahlen";
+  if (label === "What's next") return "rail-status";
+  return "";
+}
+
 function Abschnitt({
   label,
   steps,
@@ -102,6 +105,7 @@ function Abschnitt({
   rail,
   geschlossen,
   visit,
+  extraLink,
 }: {
   label: string;
   steps?: string[];
@@ -111,11 +115,13 @@ function Abschnitt({
   geschlossen?: boolean;
   /** Nur am letzten Abschnitt: der Verweis auf die Seite noch einmal, unten. */
   visit?: string;
+  /** Steht daneben, nicht darunter. */
+  extraLink?: { label: string; href: string };
 }) {
   return (
     <>
-      <p className="section-label t-eyebrow col-label mt-100">{label}</p>
-      <div className="col-body mt-100 space-y-10">
+      <p className="section-label t-eyebrow col-label mt-50">{label}</p>
+      <div className="col-body mt-50 space-y-10">
         {steps ? (
           <ol className={`step-chain t-code${geschlossen ? " step-chain-zu" : ""}`}>
             {steps.map((schritt) => (
@@ -126,22 +132,33 @@ function Abschnitt({
         {body.map((absatz, i) => (
           <p key={i} className="t-body">{mitVerweisen(absatz)}</p>
         ))}
-        {visit ? (
-          <a
-            href={visit}
-            target="_blank"
-            rel="noreferrer"
-            className="link-hover inline-block t-p2"
-            style={{ color: "var(--dh-link)" }}
-          >
-            Visit Website ↗
-          </a>
+        {visit || extraLink ? (
+          <div className="flex flex-wrap gap-20">
+            {visit ? (
+              <a
+                href={visit}
+                target="_blank"
+                rel="noreferrer"
+                className="link-hover t-p2"
+                style={{ color: "var(--dh-link)" }}
+              >
+                Visit Website ↗
+              </a>
+            ) : null}
+            {extraLink ? (
+              <a href={extraLink.href} className="link-hover t-p2" style={{ color: "var(--dh-link)" }}>
+                {extraLink.label}
+              </a>
+            ) : null}
+          </div>
         ) : null}
       </div>
       {rail ? (
-        <div className="col-rail mt-100">
+        <div className="col-rail mt-50">
           <h2 className="t-h3">{rail.label}</h2>
-          <p className="mt-15 t-code whitespace-pre-line">{rail.lines.join("\n")}</p>
+          <p className={`mt-15 t-code whitespace-pre-line ${leistenTon(rail.label)}`}>
+            {rail.lines.join("\n")}
+          </p>
         </div>
       ) : null}
     </>

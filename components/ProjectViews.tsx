@@ -22,11 +22,13 @@ export default function ProjectViews({
   views,
   shots,
   visit,
+  extraLink,
   titel,
 }: {
   views: string[];
   shots?: string[];
   visit?: string;
+  extraLink?: { label: string; href: string };
   titel: string;
 }) {
   const [aktiv, setAktiv] = useState(0);
@@ -78,16 +80,25 @@ export default function ProjectViews({
           ))}
         </div>
 
-        {visit ? (
-          <a
-            href={visit}
-            target="_blank"
-            rel="noreferrer"
-            className="view-visit link-hover mt-50 inline-block t-p2"
-            style={{ color: "var(--dh-link)" }}
-          >
-            Visit Website ↗
-          </a>
+        {visit || extraLink ? (
+          <div className="view-visit mt-50 flex flex-wrap gap-20">
+            {visit ? (
+              <a
+                href={visit}
+                target="_blank"
+                rel="noreferrer"
+                className="link-hover t-p2"
+                style={{ color: "var(--dh-link)" }}
+              >
+                Visit Website ↗
+              </a>
+            ) : null}
+            {extraLink ? (
+              <a href={extraLink.href} className="link-hover t-p2" style={{ color: "var(--dh-link)" }}>
+                {extraLink.label}
+              </a>
+            ) : null}
+          </div>
         ) : null}
       </div>
     </>

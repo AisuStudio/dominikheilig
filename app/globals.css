@@ -479,10 +479,21 @@ body { font-family: var(--font-geist-sans), system-ui, sans-serif; -webkit-font-
 /* Eine Stufe über dem Fließtext-Code: DH/P2 = 20 px. Die Kette ist ein Gerüst,
    kein Beleg — sie darf lauter sein als „Built with". */
 .step-chain { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px;
-              font-size: 20px; line-height: 1.35; }
+              font-size: 20px; line-height: 1.35; color: var(--dh-can); }
 .step-chain > li { display: flex; align-items: baseline; gap: 10px; white-space: nowrap; }
-.step-chain > li::after { content: "\2192"; opacity: 0.45; }
+.step-chain > li::after { content: "\2192"; color: var(--dh-bright); opacity: 0.5; }
 .step-chain + p { margin-top: 30px; }
+/* Die Leisten tragen die Farbe ihrer Art, wie in Figma. */
+.rail-zahlen { color: var(--dh-i); }
+.rail-status { color: var(--dh-what); }
+
+/* Auf dem Telefon: die Kette darf nicht umbrechen (nowrap je Station), also
+   muss die Schrift kleiner werden, sonst schiebt eine lange Station die Seite auf. */
+@media (max-width: 700px) {
+  .step-chain { font-size: 16px; gap: 4px 8px; }
+  .step-chain > li { gap: 8px; }
+}
+
 /* Abgeschlossenes Projekt: die Kette endet, statt weiterzuweisen. */
 .step-chain-zu > li:last-child::after { content: none; }
 
