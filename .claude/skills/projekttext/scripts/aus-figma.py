@@ -111,11 +111,17 @@ def main():
     # --- About ---
     if "02 · About" in daten:
         f = daten["02 · About"]
-        if "about.lead" in f:
-            m = re.search(r'const LEAD =\s*\n?\s*"((?:[^"\\]|\\.)*)"', profile)
+        # Einzelne Marken: ein Figma-Knoten, eine Konstante im Code
+        for figma_feld, konstante in [("about.label.approach", "APPROACH_LABEL")]:
+            if figma_feld not in f:
+                continue
+            m = re.search(rf'const {konstante} = "((?:[^"\\]|\\.)*)"', profile)
             if m:
-                profile = vergleiche(profile, m.group(1), ts_escape(f["about.lead"]), "profile · LEAD", befunde)
-        for figma_feld, konstante in [("about.howiwork", "HOW_I_WORK"),
+                profile = vergleiche(profile, m.group(1), ts_escape(f[figma_feld]),
+                                     f"profile · {konstante}", befunde)
+
+        for figma_feld, konstante in [("about.lead", "LEAD"),
+                                      ("about.howiwork", "HOW_I_WORK"),
                                       ("about.approach.big", "APPROACH_GROSS"),
                                       ("about.approach.small", "APPROACH_KLEIN")]:
             if figma_feld not in f:
