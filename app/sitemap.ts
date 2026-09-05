@@ -8,9 +8,6 @@ import { PROJECTS } from "@/lib/content";
  * Für /facts ist sie die Voraussetzung dafür, den Fußzeilen-Link weglassen zu
  * können — die Seite muss maschinell auffindbar bleiben, ohne dass ein Mensch
  * sie im Menü sieht.
- *
- * /cv steht bewusst NICHT hier: die Lebenslaufseite ist die Druckvorlage fürs
- * Bewerbungs-PDF und antwortet in der Produktion mit 404.
  */
 
 const BASIS = "https://dominikheilig.com";
@@ -21,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const seiten: MetadataRoute.Sitemap = [
     { url: BASIS, changeFrequency: "monthly", priority: 1 },
     { url: `${BASIS}/profile`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASIS}/cv`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASIS}/facts`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASIS}/privacy`, changeFrequency: "yearly", priority: 0.1 },
   ];
