@@ -56,9 +56,10 @@ const PERSON: Entitaet = {
   definition:
     "Dominik Heilig is a product manager and designer based in Berlin, Germany.",
   fakten: [
-    "He has worked in product management since 2014, and in design roles before that.",
+    "He has worked in design since 1998 and in product management since 2014.",
     "He designs, builds and operates his own software products under the name Aisu.Studio.",
     "His employment history includes Movinga, Compass.co, Salonmeister and DaWanda.",
+    "He trained as an animation designer at the Animation School Hamburg and graduated in 2003.",
     "He completed the Product Management Bootcamp of Digitale Leute School in 2025.",
     "He works in German and English.",
   ],
