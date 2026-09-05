@@ -1,8 +1,15 @@
+import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import { EMAIL } from "@/lib/content";
 
-export const metadata = { title: "Lebenslauf — Dominik Heilig" };
+/* Der Titel bleibt lokal — der Browser setzt ihn beim Drucken in die
+   Kopfzeile des PDFs. In der Produktion würde er im 404 verraten, dass es
+   die Seite gibt, also fällt er dort weg. */
+export function generateMetadata() {
+  if (process.env.NODE_ENV === "production") return {};
+  return { title: "Lebenslauf — Dominik Heilig" };
+}
 
 /**
  * Lebenslauf — deutschsprachig, aus den Bauteilen der übrigen Seiten.
@@ -11,11 +18,15 @@ export const metadata = { title: "Lebenslauf — Dominik Heilig" };
  * Abschnitt ist ein eigenes <section> mit eigener Überschrift, damit sich später
  * ein Druck-Stylesheet daran entlanghängen lässt, ohne das Markup anzufassen.
  *
- * Die Seite ist öffentlich erreichbar. Telefonnummer und Anschrift stehen
- * deshalb bewusst nicht darauf — Kontakt läuft über E-Mail und LinkedIn.
+ * Die Seite ist ABSICHTLICH nicht öffentlich: sie ist die Druckvorlage für das
+ * Bewerbungs-PDF, nicht ein Teil des Portfolios. Ein Lebenslauf ist eine
+ * lückenlose Chronologie — die gehört in eine Bewerbung, nicht dauerhaft in
+ * einen Suchindex. In der Produktion antwortet die Route deshalb mit 404;
+ * lokal liegt sie vollständig vor und lässt sich als PDF drucken.
  *
- * Ein Verweis in der Kopfzeile fehlt absichtlich; er wäre eine Zeile in
- * components/SiteHeader.tsx neben dem bestehenden „About".
+ * Öffentlich machen heißt: das notFound() unten löschen und die Adresse in
+ * app/sitemap.ts wieder aufnehmen. Telefonnummer und Anschrift stehen ohnehin
+ * nicht darauf, für den Fall, dass es doch einmal so weit kommt.
  */
 
 const PROFIL = [
@@ -283,6 +294,9 @@ function Eintrag({ s }: { s: Station }) {
 }
 
 export default function CvPage() {
+  /* Siehe Kopf dieser Datei: die Vorlage bleibt lokal. */
+  if (process.env.NODE_ENV === "production") notFound();
+
   return (
     <>
       <SiteHeader />
